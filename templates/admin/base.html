@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{% block title %}Admin — AviaGreene{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+</head>
+<body>
+<div class="admin-layout">
+  <aside class="admin-sidebar">
+    <div class="admin-sidebar-logo">
+      <a href="{{ url_for('home') }}" class="logo logo-light" style="text-decoration:none;">
+        <img src="/static/images/logo.png" alt="AviaGreene" style="height:36px;width:auto;object-fit:contain;" />
+      </a>
+    </div>
+
+    <div style="padding:0.5rem 0;flex:1;">
+      <div style="padding:0.5rem 1.5rem;font-size:0.6rem;text-transform:uppercase;letter-spacing:0.18em;color:hsl(40 30% 97% / 0.35);margin-top:0.5rem;">Overview</div>
+      <a href="{{ url_for('admin_dashboard') }}" class="{% if request.endpoint == 'admin_dashboard' %}active{% endif %}">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg>
+        Dashboard
+      </a>
+
+      <div style="padding:0.5rem 1.5rem;font-size:0.6rem;text-transform:uppercase;letter-spacing:0.18em;color:hsl(40 30% 97% / 0.35);margin-top:1rem;">Leads</div>
+      <a href="{{ url_for('admin_quotes') }}" class="{% if request.endpoint in ['admin_quotes'] %}active{% endif %}" style="justify-content:space-between;">
+        <span style="display:flex;align-items:center;gap:0.6rem;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          Quote Requests
+        </span>
+        {% set unread = namespace(count=0) %}
+        {% if unread_count is defined and unread_count > 0 %}
+        <span style="background:hsl(0,70%,55%);color:#fff;font-size:0.6rem;font-weight:700;padding:2px 6px;border-radius:20px;min-width:18px;text-align:center;">{{ unread_count }}</span>
+        {% endif %}
+      </a>
+
+      <div style="padding:0.5rem 1.5rem;font-size:0.6rem;text-transform:uppercase;letter-spacing:0.18em;color:hsl(40 30% 97% / 0.35);margin-top:1rem;">Activity</div>
+      <a href="{{ url_for('admin_activity') }}" class="{% if request.endpoint == 'admin_activity' %}active{% endif %}">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        Activity Log
+      </a>
+
+      <div style="padding:0.5rem 1.5rem;font-size:0.6rem;text-transform:uppercase;letter-spacing:0.18em;color:hsl(40 30% 97% / 0.35);margin-top:1rem;">Content</div>
+      <a href="{{ url_for('admin_blog') }}" class="{% if 'admin_blog' in request.endpoint %}active{% endif %}">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/><path d="M18 14h-8"/><path d="M15 18h-5"/><path d="M10 6h8v4h-8V6z"/></svg>
+        Blog Posts
+      </a>
+      <a href="{{ url_for('admin_testimonials') }}" class="{% if request.endpoint == 'admin_testimonials' %}active{% endif %}" style="justify-content:space-between;">
+        <span style="display:flex;align-items:center;gap:0.6rem;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"/><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c0 2.25.25 4-2.75 4v3c0 1 0 1 1 1z"/></svg>
+          Testimonials
+        </span>
+        {% set pending_count = pending_testimonials_count %}
+        {% if pending_count > 0 %}
+        <span style="background:hsl(38,75%,55%);color:#fff;font-size:0.6rem;font-weight:700;padding:2px 6px;border-radius:20px;min-width:18px;text-align:center;">{{ pending_count }}</span>
+        {% endif %}
+      </a>
+    </div>
+
+    <div style="border-top:1px solid hsl(40 30% 97% / 0.1);">
+      <a href="{{ url_for('admin_settings') }}" class="{% if request.endpoint == 'admin_settings' %}active{% endif %}" style="padding:1rem 1.5rem;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
+        Settings
+      </a>
+      <a href="{{ url_for('admin_logout') }}" style="padding:1rem 1.5rem;color:hsl(40 30% 97% / 0.5);font-size:0.8rem;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" x2="9" y1="12" y2="12"/></svg>
+        Log Out
+      </a>
+    </div>
+  </aside>
+
+  <main class="admin-content">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div style="background:{% if category == 'success' %}hsl(152,40%,93%){% else %}hsl(0,60%,93%){% endif %};border-left:3px solid {% if category == 'success' %}var(--green){% else %}hsl(0,60%,50%){% endif %};padding:0.75rem 1.25rem;font-size:0.875rem;margin-bottom:1.5rem;color:{% if category == 'success' %}hsl(152,50%,25%){% else %}hsl(0,50%,35%){% endif %};">
+            {{ message }}
+          </div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+    {% block content %}{% endblock %}
+  </main>
+</div>
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+
+{% block title %}Testimonials — AviaGreene Solutions{% endblock %}
+{% block meta_description %}What our clients say about AviaGreene Solutions — trusted by operators, corporates and organisations across Africa and beyond.{% endblock %}
+{% block canonical_path %}/testimonials{% endblock %}
+{% block og_title %}Client Testimonials — AviaGreene Solutions{% endblock %}
+{% block og_description %}Hear from the operators, corporates and organisations who trust AviaGreene for their aviation needs.{% endblock %}
+{% block og_url %}/testimonials{% endblock %}
+
+{% block content %}
+<div style="padding-top:80px;"></div>
+
+<section class="page-hero">
+  <img src="https://images.unsplash.com/photo-1529074963764-98f45c47344b?w=1920&q=80" alt="Testimonials" loading="lazy" />
+  <div class="page-hero-overlay"></div>
+  <div class="container page-hero-content">
+    <div class="hero-eyebrow" style="color:hsl(40 30% 97%/0.75);">
+      <span style="height:1px;width:40px;background:var(--gold);display:inline-block;"></span>
+      Client Testimonials
+    </div>
+    <h1>Trusted by those who <span class="italic green">demand the best.</span></h1>
+    <p class="page-hero-sub">The measure of our work is in the words of those we serve.</p>
+    <nav class="breadcrumb">
+      <a href="{{ url_for('home') }}">Home</a>
+      <span class="sep">›</span>
+      <span class="current">Testimonials</span>
+    </nav>
+  </div>
+</section>
+
+<section class="section-lg">
+  <div class="container">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(420px,1fr));gap:1.5rem;">
+      {% for t in testimonials %}
+      <div class="fade-up" style="
+        background:var(--card);
+        border:1px solid var(--border);
+        padding:2.5rem;
+        position:relative;
+        display:flex;flex-direction:column;justify-content:space-between;gap:2rem;
+      ">
+        <!-- Quote mark -->
+        <div style="
+          position:absolute;top:1.5rem;right:2rem;
+          font-family:'Playfair Display',serif;
+          font-size:5rem;line-height:1;
+          color:var(--green);opacity:0.08;
+          pointer-events:none;
+          ">"</div>
+
+        <!-- Stars -->
+        <div style="display:flex;gap:3px;margin-bottom:0.5rem;">
+          {% for i in range(5) %}
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="hsl(38,55%,55%)" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          {% endfor %}
+        </div>
+
+        <p style="font-size:1rem;color:var(--fg);line-height:1.9;font-style:italic;margin:0;">"{{ t.body }}"</p>
+
+        <div style="display:flex;align-items:center;gap:1rem;padding-top:1.5rem;border-top:1px solid var(--border);">
+          <div style="
+            width:44px;height:44px;border-radius:50%;
+            background:var(--green);
+            display:flex;align-items:center;justify-content:center;
+            font-weight:700;font-size:0.875rem;color:#fff;
+            flex-shrink:0;
+          ">{{ t.initials }}</div>
+          <div>
+            <div style="font-weight:600;font-size:0.9375rem;color:var(--navy);">{{ t.name }}</div>
+            <div style="font-size:0.8rem;color:var(--muted-fg);margin-top:1px;">{{ t.title }}</div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- Submit testimonial CTA -->
+<section class="section-sm" style="background:var(--muted);border-top:1px solid var(--border);">
+  <div class="container" style="text-align:center;">
+    <span class="eyebrow" style="justify-content:center;">Worked With Us?</span>
+    <h2 style="margin-top:1rem;font-size:clamp(1.5rem,2.5vw,2rem);color:var(--navy);">
+      Share your <span class="italic text-green">experience.</span>
+    </h2>
+    <p style="color:var(--muted-fg);margin:0.75rem auto 2rem;max-width:480px;font-size:0.9375rem;line-height:1.8;">
+      We'd love to hear about your experience with AviaGreene. Your feedback helps others make informed decisions.
+    </p>
+    <a href="{{ url_for('testimonial_submit') }}" class="btn btn-green">Write a Testimonial</a>
+  </div>
+</section>
+
+{% include "_cta_band.html" %}
+{% endblock %}

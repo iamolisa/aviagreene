@@ -1,0 +1,94 @@
+{% extends "admin/base.html" %}
+{% block title %}Export Quotes — AviaGreene Admin{% endblock %}
+
+{% block content %}
+<div class="admin-header">
+  <h1>Export Quote Requests</h1>
+  <p style="color:var(--muted-fg);margin-top:0.25rem;font-size:0.9rem;">Filter and download quote requests as a CSV file.</p>
+</div>
+
+<div style="max-width:560px;">
+  <div style="background:var(--card);border:1px solid var(--border);padding:2rem;">
+    <form method="POST" action="{{ url_for('admin_quotes_export') }}" style="display:flex;flex-direction:column;gap:1.5rem;">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+      <!-- Time Period -->
+      <div>
+        <label style="font-size:0.65rem;text-transform:uppercase;letter-spacing:0.15em;color:var(--muted-fg);display:block;margin-bottom:0.75rem;">Time Period</label>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:0.5rem;" id="period-btns">
+          {% for val, label in [('all','All Time'),('today','Today'),('week','This Week'),('month','This Month'),('year','This Year'),('custom','Custom Range')] %}
+          <button type="button"
+            class="period-btn {% if val == 'all' %}active{% endif %}"
+            data-value="{{ val }}"
+            onclick="setPeriod('{{ val }}')"
+            style="
+              padding:0.6rem 0.5rem;font-size:0.78rem;font-family:inherit;
+              border:1px solid var(--border);background:var(--bg);color:var(--navy);
+              cursor:pointer;transition:all 0.2s;font-weight:500;
+            ">{{ label }}</button>
+          {% endfor %}
+        </div>
+        <input type="hidden" name="period" id="period-value" value="all" />
+      </div>
+
+      <!-- Custom Date Range (hidden unless custom selected) -->
+      <div id="custom-range" style="display:none;background:var(--muted);padding:1.25rem;gap:1rem;display:none;grid-template-columns:1fr 1fr;">
+        <div>
+          <label style="font-size:0.65rem;text-transform:uppercase;letter-spacing:0.15em;color:var(--muted-fg);display:block;margin-bottom:0.35rem;">From</label>
+          <input type="date" name="date_from" style="width:100%;border:1px solid var(--border);padding:0.55rem;font-size:0.875rem;background:var(--bg);" />
+        </div>
+        <div>
+          <label style="font-size:0.65rem;text-transform:uppercase;letter-spacing:0.15em;color:var(--muted-fg);display:block;margin-bottom:0.35rem;">To</label>
+          <input type="date" name="date_to" style="width:100%;border:1px solid var(--border);padding:0.55rem;font-size:0.875rem;background:var(--bg);" />
+        </div>
+      </div>
+
+      <!-- Status Filter -->
+      <div>
+        <label style="font-size:0.65rem;text-transform:uppercase;letter-spacing:0.15em;color:var(--muted-fg);display:block;margin-bottom:0.35rem;">Status</label>
+        <select name="status" style="width:100%;border:1px solid var(--border);padding:0.6rem 0.75rem;font-size:0.875rem;background:var(--bg);">
+          <option value="">All Statuses</option>
+          <option value="new">New</option>
+          <option value="in-progress">In Progress</option>
+          <option value="done">Done</option>
+        </select>
+      </div>
+
+      <!-- Client Type Filter -->
+      <div>
+        <label style="font-size:0.65rem;text-transform:uppercase;letter-spacing:0.15em;color:var(--muted-fg);display:block;margin-bottom:0.35rem;">Client Type</label>
+        <select name="client_type" style="width:100%;border:1px solid var(--border);padding:0.6rem 0.75rem;font-size:0.875rem;background:var(--bg);">
+          <option value="">All Types</option>
+          <option value="individual">Individual</option>
+          <option value="company">Company</option>
+          <option value="operator">Operator</option>
+        </select>
+      </div>
+
+      <div style="padding-top:0.5rem;border-top:1px solid var(--border);display:flex;gap:0.75rem;align-items:center;">
+        <button type="submit" class="btn btn-green">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+          Download CSV
+        </button>
+        <a href="{{ url_for('admin_quotes') }}" class="btn btn-navy btn-sm">Cancel</a>
+      </div>
+    </form>
+  </div>
+
+  <p style="margin-top:1rem;font-size:0.8rem;color:var(--muted-fg);">The exported file will include: Reference No., Client Type, Name, Email, Phone, Organisation details, Service, Requirements, Status, and Date Submitted.</p>
+</div>
+
+<style>
+  .period-btn.active { background:var(--green) !important; color:#fff !important; border-color:var(--green) !important; }
+  .period-btn:hover:not(.active) { border-color:var(--green); color:var(--green); }
+</style>
+
+<script>
+function setPeriod(val) {
+  document.getElementById('period-value').value = val;
+  document.querySelectorAll('.period-btn').forEach(b => b.classList.toggle('active', b.dataset.value === val));
+  const cr = document.getElementById('custom-range');
+  cr.style.display = val === 'custom' ? 'grid' : 'none';
+}
+</script>
+{% endblock %}

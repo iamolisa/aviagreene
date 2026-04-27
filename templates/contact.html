@@ -1,0 +1,254 @@
+{% extends "base.html" %}
+
+{% block title %}Contact — AviaGreene Solutions{% endblock %}
+{% block meta_description %}Request an aviation quote from AviaGreene Solutions. We respond within hours, 24/7. Ground handling, permits, fuel, dispatch, catering and more.{% endblock %}
+{% block meta_keywords %}contact AviaGreene, aviation quote Nigeria, request aviation services Lagos, AviaGreene contact{% endblock %}
+{% block canonical_path %}/contact{% endblock %}
+{% block og_title %}Request a Quote — AviaGreene Solutions{% endblock %}
+{% block og_description %}Tell us about your flight, route or operational need. Tailored proposals within hours, complete confidentiality.{% endblock %}
+{% block og_url %}/contact{% endblock %}
+{% block description %}Speak with our operations desk. Tailored quotes within hours, complete confidentiality, 24/7 availability.{% endblock %}
+
+{% block content %}
+
+<div style="padding-top:80px;"></div>
+
+<!-- PAGE HERO -->
+<section class="page-hero">
+  <img src="https://images.unsplash.com/photo-1474302770737-173ee21bab63?w=1920&q=80" alt="Contact AviaGreene" />
+  <div class="page-hero-overlay"></div>
+  <div class="container page-hero-content">
+    <div class="hero-eyebrow" style="color:hsl(40 30% 97%/0.75);">
+      <span style="height:1px;width:40px;background:var(--gold);display:inline-block;"></span>
+      Get in touch
+    </div>
+    <h1>Request a quote.<br /><span class="italic green">We respond within hours.</span></h1>
+    <p class="page-hero-sub">Tell us about your flight, route or operational need. Our team will get back to you with a tailored proposal — no obligations, complete confidentiality.</p>
+    <nav class="breadcrumb">
+      <a href="{{ url_for('home') }}">Home</a>
+      <span class="sep">›</span>
+      <span class="current">Contact</span>
+    </nav>
+  </div>
+</section>
+
+<!-- CONTACT SECTION -->
+<section class="section-lg">
+  <div class="container" style="display:grid;grid-template-columns:5fr 7fr;gap:4rem;">
+    <!-- Left: info -->
+    <div class="fade-up">
+      <span class="eyebrow">Operations Desk</span>
+      <h2 style="margin-top:1.25rem;font-size:clamp(1.5rem,2.5vw,2.25rem);color:var(--navy);line-height:1.2;">
+        One team. <span class="italic text-green">Always available.</span>
+      </h2>
+
+      <div style="margin-top:2.5rem;display:flex;flex-direction:column;gap:1.5rem;">
+        <div class="contact-row">
+          <span class="contact-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+          </span>
+          <div>
+            <div class="contact-row-title">Headquarters</div>
+            <div class="contact-row-body">2nd floor, EAN Jetcenter, Murtala Muhammed International Airport<br />Lagos, Nigeria<br /><br />Serving clients globally</div>
+          </div>
+        </div>
+
+        <div class="contact-row">
+          <span class="contact-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.1 13.22a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3 2.5h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 10.1a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          </span>
+          <div>
+            <div class="contact-row-title">Phone</div>
+            <div class="contact-row-body"><a href="tel:+234 907 758 4674">+234 (0) 907 758 4674</a></div>
+          </div>
+        </div>
+
+        <div class="contact-row">
+          <span class="contact-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+          </span>
+          <div>
+            <div class="contact-row-title">Email</div>
+            <div class="contact-row-body">
+              <a href="mailto:ops@aviagreene.com">ops@aviagreene.com</a><br />
+            </div>
+          </div>
+        </div>
+
+        <div class="contact-row">
+          <span class="contact-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </span>
+          <div>
+            <div class="contact-row-title">Hours</div>
+            <div class="contact-row-body">
+              Operations desk: 24 / 7 / 365<br />
+              Office: Mon–Fri, 09:00–18:00 WAT
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: form -->
+    <div class="fade-up" style="animation-delay:0.1s;">
+      {% if success %}
+      <div class="quote-form form-success">
+        <div class="form-success-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="m9 12 2 2 4-4"/></svg>
+        </div>
+        <h3>Thank you.</h3>
+        <p>Your request has been received. Our operations team will be in touch shortly.</p>
+      </div>
+      {% else %}
+      <form class="quote-form" method="POST" id="contact-form">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+        <!-- STEP 1: Client type selector -->
+        <div class="form-field form-space" style="margin-bottom:1.75rem;">
+          <label>I am enquiring as a <span class="req">*</span></label>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:0.75rem;margin-top:0.5rem;" id="client-type-btns">
+            <button type="button" class="type-btn active" data-type="individual" onclick="setType('individual')">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+              Individual
+            </button>
+            <button type="button" class="type-btn" data-type="company" onclick="setType('company')">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="16" height="20" x="4" y="2" rx="2"/><path d="M9 22v-4h6v4"/><path d="M8 6h.01M16 6h.01M12 6h.01M12 10h.01M8 10h.01M16 10h.01M12 14h.01M8 14h.01M16 14h.01"/></svg>
+              Company
+            </button>
+            <button type="button" class="type-btn" data-type="operator" onclick="setType('operator')">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21 4 19 2c-2-2-4-2-5.5-.5L10 5 1.8 6.2c-.5.1-.9.6-.6 1.1l1.5 2.5c.3.4.8.6 1.3.6L8 10l-6.3 3.6c-.4.3-.5.9-.2 1.3l2.1 2.1 2.1 2.1c.4.4 1 .3 1.3-.2L11 13l-.1 3.9c0 .5.2 1 .6 1.3l2.5 1.5c.5.3 1-.1 1.1-.6z"/></svg>
+              Operator
+            </button>
+          </div>
+          <input type="hidden" name="client_type" id="client_type" value="individual" />
+        </div>
+
+        <!-- COMMON FIELDS -->
+        <div class="form-row">
+          <div class="form-field">
+            <label>Full Name <span class="req">*</span></label>
+            <input type="text" name="full_name" required placeholder="Your full name" />
+          </div>
+          <div class="form-field">
+            <label>Email <span class="req">*</span></label>
+            <input type="email" name="email" required placeholder="you@example.com" />
+          </div>
+        </div>
+
+        <div class="form-field form-space">
+          <label>Phone</label>
+          <input type="tel" name="phone" placeholder="+234 ..." />
+        </div>
+
+        <!-- COMPANY FIELDS -->
+        <div id="fields-company" class="type-fields" style="display:none;">
+          <div class="form-row form-space">
+            <div class="form-field">
+              <label>Company Name <span class="req">*</span></label>
+              <input type="text" name="company_name" placeholder="e.g. Zenith Group Ltd." />
+            </div>
+            <div class="form-field">
+              <label>Your Job Title</label>
+              <input type="text" name="job_title" placeholder="e.g. Head of Operations" />
+            </div>
+          </div>
+          <div class="form-field form-space">
+            <label>Country of Operation</label>
+            <input type="text" name="country" placeholder="e.g. Nigeria" />
+          </div>
+        </div>
+
+        <!-- OPERATOR FIELDS -->
+        <div id="fields-operator" class="type-fields" style="display:none;">
+          <div class="form-row form-space">
+            <div class="form-field">
+              <label>Operator / Airline Name <span class="req">*</span></label>
+              <input type="text" name="operator_name" placeholder="e.g. Overland Airways" />
+            </div>
+            <div class="form-field">
+              <label>Aircraft Type(s)</label>
+              <input type="text" name="aircraft_type" placeholder="e.g. Boeing 737, King Air 350" />
+            </div>
+          </div>
+          <div class="form-row form-space">
+            <div class="form-field">
+              <label>Approximate Fleet Size</label>
+              <select name="fleet_size">
+                <option value="">Select...</option>
+                <option value="1">1 aircraft</option>
+                <option value="2-5">2–5 aircraft</option>
+                <option value="6-15">6–15 aircraft</option>
+                <option value="16+">16+ aircraft</option>
+              </select>
+            </div>
+            <div class="form-field">
+              <label>Base Airport (ICAO)</label>
+              <input type="text" name="base_airport" placeholder="e.g. DNMM (Lagos)" />
+            </div>
+          </div>
+        </div>
+
+        <!-- SERVICE + MESSAGE (shared) -->
+        <div class="form-field form-space">
+          <label>Service of Interest</label>
+          <select name="service" id="service-select">
+            {% for s in services %}
+            <option value="{{ s.title }}" {% if preselected_service and preselected_service in s.slug %}selected{% endif %}>{{ s.title }}</option>
+            {% endfor %}
+            <option value="Multiple / Not sure" {% if not preselected_service %}selected{% endif %}>Multiple / Not sure</option>
+          </select>
+        </div>
+
+        <div class="form-field form-space">
+          <label>Tell us about your requirements</label>
+          <textarea name="requirements" rows="5" placeholder="Describe your flight, route or operational need..."></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-navy" style="width:100%;justify-content:center;margin-top:1.25rem;">
+          Submit Request
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
+        </button>
+      </form>
+
+      <style>
+        .type-btn {
+          display:flex; flex-direction:column; align-items:center; gap:0.5rem;
+          padding:1rem 0.75rem; background:var(--muted); border:2px solid var(--border);
+          cursor:pointer; font-size:0.8rem; font-weight:500; color:var(--navy);
+          transition:all 0.2s; font-family:inherit; letter-spacing:0.02em;
+        }
+        .type-btn:hover { border-color:var(--green); color:var(--green); }
+        .type-btn.active { border-color:var(--green); background:var(--green-soft); color:var(--green); }
+        .type-fields { transition: opacity 0.2s; }
+      </style>
+
+      <script>
+        function setType(type) {
+          document.getElementById('client_type').value = type;
+          document.querySelectorAll('.type-btn').forEach(b => {
+            b.classList.toggle('active', b.dataset.type === type);
+          });
+          document.querySelectorAll('.type-fields').forEach(f => {
+            f.style.display = 'none';
+          });
+          const fields = document.getElementById('fields-' + type);
+          if (fields) fields.style.display = 'block';
+
+          // Toggle required on conditional fields
+          document.querySelectorAll('#fields-company input[type=text], #fields-operator input[type=text]').forEach(i => {
+            i.removeAttribute('required');
+          });
+          if (type === 'company') {
+            document.querySelector('[name=company_name]').setAttribute('required', '');
+          } else if (type === 'operator') {
+            document.querySelector('[name=operator_name]').setAttribute('required', '');
+          }
+        }
+      </script>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+{% endblock %}

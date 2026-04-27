@@ -1,0 +1,121 @@
+{% extends "admin/base.html" %}
+{% block title %}Quote Requests — AviaGreene Admin{% endblock %}
+
+{% block content %}
+<div class="admin-header" style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:1rem;">
+  <div>
+    <h1>Quote Requests</h1>
+    <p style="color:var(--muted-fg);margin-top:0.25rem;font-size:0.9rem;">All incoming quote requests from the website.</p>
+  </div>
+  <a href="{{ url_for('admin_quotes_export') }}" class="btn btn-sm btn-navy">
+    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+    Export CSV
+  </a>
+</div>
+
+<!-- SEARCH & FILTER BAR -->
+<form method="GET" action="{{ url_for('admin_quotes') }}" style="background:var(--card);border:1px solid var(--border);padding:1.25rem 1.5rem;margin-bottom:1.5rem;display:flex;gap:0.75rem;flex-wrap:wrap;align-items:flex-end;">
+  <div style="flex:1;min-width:200px;">
+    <label style="font-size:0.65rem;text-transform:uppercase;letter-spacing:0.15em;color:var(--muted-fg);display:block;margin-bottom:0.35rem;">Search</label>
+    <input type="text" name="search" value="{{ search }}" placeholder="Name, email, company, service..." style="width:100%;border:1px solid var(--border);padding:0.55rem 0.75rem;font-size:0.875rem;background:var(--bg);" />
+  </div>
+  <div style="min-width:140px;">
+    <label style="font-size:0.65rem;text-transform:uppercase;letter-spacing:0.15em;color:var(--muted-fg);display:block;margin-bottom:0.35rem;">Status</label>
+    <select name="status" style="width:100%;border:1px solid var(--border);padding:0.55rem 0.75rem;font-size:0.875rem;background:var(--bg);">
+      <option value="">All Statuses</option>
+      <option value="new" {% if status_filter == 'new' %}selected{% endif %}>New</option>
+      <option value="in-progress" {% if status_filter == 'in-progress' %}selected{% endif %}>In Progress</option>
+      <option value="done" {% if status_filter == 'done' %}selected{% endif %}>Done</option>
+    </select>
+  </div>
+  <div style="min-width:140px;">
+    <label style="font-size:0.65rem;text-transform:uppercase;letter-spacing:0.15em;color:var(--muted-fg);display:block;margin-bottom:0.35rem;">Client Type</label>
+    <select name="client_type" style="width:100%;border:1px solid var(--border);padding:0.55rem 0.75rem;font-size:0.875rem;background:var(--bg);">
+      <option value="">All Types</option>
+      <option value="individual" {% if type_filter == 'individual' %}selected{% endif %}>Individual</option>
+      <option value="company" {% if type_filter == 'company' %}selected{% endif %}>Company</option>
+      <option value="operator" {% if type_filter == 'operator' %}selected{% endif %}>Operator</option>
+    </select>
+  </div>
+  <div style="display:flex;gap:0.5rem;">
+    <button type="submit" class="btn btn-green btn-sm">Filter</button>
+    {% if search or status_filter or type_filter %}
+    <a href="{{ url_for('admin_quotes') }}" class="btn btn-sm btn-navy">Clear</a>
+    {% endif %}
+  </div>
+</form>
+
+<!-- RESULTS COUNT -->
+<p style="font-size:0.8rem;color:var(--muted-fg);margin-bottom:0.75rem;">
+  Showing <strong style="color:var(--navy);">{{ quotes|length }}</strong> request{{ 's' if quotes|length != 1 }}
+  {% if search or status_filter or type_filter %} — filtered{% endif %}
+</p>
+
+<div style="background:var(--card);border:1px solid var(--border);overflow:hidden;">
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Name / Email</th>
+        <th>Type</th>
+        <th>Organisation</th>
+        <th>Service</th>
+        <th>Status</th>
+        <th>Date</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for q in quotes %}
+      <tr>
+        <td style="color:var(--muted-fg);font-size:0.8rem;">{{ q.id }}</td>
+        <td>
+          <strong>{{ q.full_name }}</strong><br />
+          <a href="mailto:{{ q.email }}" style="font-size:0.8rem;color:var(--green);">{{ q.email }}</a>
+          {% if q.phone %}<br /><span style="font-size:0.8rem;color:var(--muted-fg);">{{ q.phone }}</span>{% endif %}
+        </td>
+        <td>
+          <span class="badge {% if q.client_type == 'company' %}badge-new{% elif q.client_type == 'operator' %}badge-done{% else %}badge-pending{% endif %}" style="text-transform:capitalize;">
+            {{ q.client_type or 'individual' }}
+          </span>
+        </td>
+        <td style="font-size:0.82rem;color:var(--muted-fg);max-width:160px;">
+          {% if q.client_type == 'company' %}
+            {% if q.company_name %}<strong style="color:var(--navy);">{{ q.company_name }}</strong><br />{% endif %}
+            {% if q.job_title %}{{ q.job_title }}{% endif %}
+          {% elif q.client_type == 'operator' %}
+            {% if q.operator_name %}<strong style="color:var(--navy);">{{ q.operator_name }}</strong><br />{% endif %}
+            {% if q.aircraft_type %}{{ q.aircraft_type }}{% endif %}
+          {% else %}—{% endif %}
+        </td>
+        <td style="font-size:0.85rem;">{{ q.service or '—' }}</td>
+        <td><span class="badge badge-{{ q.status }}">{{ q.status }}</span></td>
+        <td style="font-size:0.8rem;color:var(--muted-fg);white-space:nowrap;">{{ q.created_at.strftime('%d %b %Y') }}</td>
+        <td>
+          <div style="display:flex;gap:0.4rem;flex-wrap:wrap;">
+            <a href="{{ url_for('admin_quote_detail', quote_id=q.id) }}" class="btn btn-sm btn-navy" style="padding:0.3rem 0.75rem;">View</a>
+            <form method="POST" action="{{ url_for('admin_quote_status', quote_id=q.id) }}" style="display:flex;gap:0.25rem;">
+              <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+              <select name="status" style="font-size:0.75rem;border:1px solid var(--border);padding:0.25rem;background:var(--bg);">
+                <option value="new" {% if q.status == 'new' %}selected{% endif %}>New</option>
+                <option value="in-progress" {% if q.status == 'in-progress' %}selected{% endif %}>In Progress</option>
+                <option value="done" {% if q.status == 'done' %}selected{% endif %}>Done</option>
+              </select>
+              <button type="submit" class="btn btn-sm btn-green" style="padding:0.3rem 0.6rem;">✓</button>
+            </form>
+            <form method="POST" action="{{ url_for('admin_quote_delete', quote_id=q.id) }}" onsubmit="return confirm('Delete this request?');" style="display:inline;">
+              <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+              <button type="submit" class="btn btn-sm" style="padding:0.3rem 0.6rem;background:hsl(0,60%,93%);color:hsl(0,60%,40%);border:none;cursor:pointer;">✕</button>
+            </form>
+          </div>
+        </td>
+      </tr>
+      {% else %}
+      <tr><td colspan="8" style="text-align:center;color:var(--muted-fg);padding:3rem;">
+        {% if search or status_filter or type_filter %}No results match your filters.{% else %}No quote requests yet.{% endif %}
+      </td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

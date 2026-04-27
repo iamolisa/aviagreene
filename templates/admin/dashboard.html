@@ -1,0 +1,123 @@
+{% extends "admin/base.html" %}
+{% block title %}Dashboard — AviaGreene Admin{% endblock %}
+
+{% block content %}
+<div class="admin-header">
+  <h1>Dashboard</h1>
+  <p style="color:var(--muted-fg);margin-top:0.25rem;font-size:0.9rem;">Overview of all incoming leads and content.</p>
+</div>
+
+<!-- STAT CARDS -->
+<div class="admin-stat-cards">
+  <div class="admin-stat-card">
+    <div class="num">{{ stats.total_quotes }}</div>
+    <div class="label">Total Requests</div>
+  </div>
+  <div class="admin-stat-card" style="border-left:3px solid hsl(0,65%,55%);">
+    <div class="num" style="color:hsl(0,65%,55%);">{{ stats.new_quotes }}</div>
+    <div class="label">Unread / New</div>
+  </div>
+  <div class="admin-stat-card">
+    <div class="num">{{ stats.total_posts }}</div>
+    <div class="label">Blog Posts</div>
+  </div>
+  <div class="admin-stat-card">
+    <div class="num" style="color:var(--gold);">{{ stats.published_posts }}</div>
+    <div class="label">Published</div>
+  </div>
+</div>
+
+<div style="display:grid;grid-template-columns:2fr 1fr;gap:1.5rem;">
+
+  <!-- Left: Recent Quotes -->
+  <div>
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;">
+      <h2 style="font-size:1.125rem;color:var(--navy);">Recent Quote Requests</h2>
+      <div style="display:flex;gap:0.5rem;">
+        <a href="{{ url_for('admin_quotes_export') }}" class="btn btn-sm btn-navy">Export CSV</a>
+        <a href="{{ url_for('admin_quotes') }}" class="btn btn-sm btn-green">View All</a>
+      </div>
+    </div>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Service</th>
+          <th>Status</th>
+          <th>Date</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for q in quotes[:8] %}
+        <tr>
+          <td>
+            <strong>{{ q.full_name }}</strong><br />
+            <span style="font-size:0.8rem;color:var(--muted-fg);">{{ q.email }}</span>
+          </td>
+          <td style="text-transform:capitalize;font-size:0.85rem;">{{ q.client_type or 'individual' }}</td>
+          <td style="font-size:0.85rem;">{{ q.service or '—' }}</td>
+          <td><span class="badge badge-{{ q.status }}">{{ q.status }}</span></td>
+          <td style="font-size:0.8rem;color:var(--muted-fg);">{{ q.created_at.strftime('%d %b %Y') }}</td>
+          <td><a href="{{ url_for('admin_quote_detail', quote_id=q.id) }}" class="btn btn-sm btn-navy" style="padding:0.25rem 0.6rem;font-size:0.72rem;">View</a></td>
+        </tr>
+        {% else %}
+        <tr><td colspan="6" style="text-align:center;color:var(--muted-fg);padding:2rem;">No quote requests yet.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <!-- Recent Blog Posts -->
+    <div style="display:flex;justify-content:space-between;align-items:center;margin:2rem 0 1rem;">
+      <h2 style="font-size:1.125rem;color:var(--navy);">Recent Blog Posts</h2>
+      <a href="{{ url_for('admin_blog_new') }}" class="btn btn-sm btn-green">+ New Post</a>
+    </div>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Category</th>
+          <th>Status</th>
+          <th>Date</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for post in posts[:5] %}
+        <tr>
+          <td><strong>{{ post.title }}</strong></td>
+          <td>{{ post.category or '—' }}</td>
+          <td><span class="badge {% if post.is_published %}badge-new{% else %}badge-done{% endif %}">{{ 'Published' if post.is_published else 'Draft' }}</span></td>
+          <td style="font-size:0.8rem;color:var(--muted-fg);">{{ post.published_at.strftime('%d %b %Y') }}</td>
+          <td><a href="{{ url_for('admin_blog_edit', post_id=post.id) }}" class="btn btn-sm btn-navy" style="padding:0.25rem 0.6rem;font-size:0.72rem;">Edit</a></td>
+        </tr>
+        {% else %}
+        <tr><td colspan="5" style="text-align:center;color:var(--muted-fg);padding:2rem;">No blog posts yet.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Right: Activity Log -->
+  <div>
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;">
+      <h2 style="font-size:1.125rem;color:var(--navy);">Recent Activity</h2>
+      <a href="{{ url_for('admin_activity') }}" class="btn btn-sm btn-navy">View All</a>
+    </div>
+    <div style="background:var(--card);border:1px solid var(--border);overflow:hidden;">
+      {% if activity %}
+      {% for log in activity %}
+      <div style="padding:0.85rem 1.25rem;border-bottom:1px solid var(--border);{% if loop.last %}border-bottom:none;{% endif %}">
+        <p style="margin:0;font-size:0.825rem;color:var(--fg);line-height:1.5;">{{ log.action }}</p>
+        <p style="margin:0.2rem 0 0;font-size:0.72rem;color:var(--muted-fg);">{{ log.created_at.strftime('%d %b %Y, %H:%M') }}</p>
+      </div>
+      {% endfor %}
+      {% else %}
+      <div style="padding:2rem;text-align:center;color:var(--muted-fg);font-size:0.875rem;">No activity yet.</div>
+      {% endif %}
+    </div>
+  </div>
+
+</div>
+{% endblock %}

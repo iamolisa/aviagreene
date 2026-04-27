@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>New Quote Request</title>
+</head>
+<body style="margin:0;padding:0;background:#f0f2f5;font-family:'Helvetica Neue',Arial,sans-serif;">
+<table width="100%" cellpadding="0" cellspacing="0" style="background:#f0f2f5;padding:40px 20px;">
+  <tr><td align="center">
+    <table width="600" cellpadding="0" cellspacing="0" style="background:#ffffff;max-width:600px;width:100%;">
+
+      <!-- Header -->
+      <tr>
+        <td style="background:#0d3b2e;padding:28px 40px;">
+          <p style="margin:0;font-size:11px;text-transform:uppercase;letter-spacing:3px;color:rgba(255,255,255,0.5);">AviaGreene Solutions Ltd.</p>
+          <p style="margin:6px 0 0;font-size:18px;font-weight:600;color:#ffffff;">New Quote Request</p>
+        </td>
+      </tr>
+
+      <!-- Body -->
+      <tr>
+        <td style="padding:36px 40px;">
+          <p style="margin:0 0 24px;font-size:14px;color:#555;">A new request has been submitted via the website.</p>
+
+          <table width="100%" cellpadding="0" cellspacing="0">
+            <tr>
+              <td style="padding:10px 0;border-bottom:1px solid #f0f0f0;">
+                <span style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:#999;">Name</span><br/>
+                <span style="font-size:14px;font-weight:600;color:#111;">{{ quote.full_name }}</span>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding:10px 0;border-bottom:1px solid #f0f0f0;">
+                <span style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:#999;">Email</span><br/>
+                <span style="font-size:14px;color:#111;"><a href="mailto:{{ quote.email }}" style="color:#1a6644;">{{ quote.email }}</a></span>
+              </td>
+            </tr>
+            {% if quote.phone %}
+            <tr>
+              <td style="padding:10px 0;border-bottom:1px solid #f0f0f0;">
+                <span style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:#999;">Phone</span><br/>
+                <span style="font-size:14px;color:#111;">{{ quote.phone }}</span>
+              </td>
+            </tr>
+            {% endif %}
+            <tr>
+              <td style="padding:10px 0;border-bottom:1px solid #f0f0f0;">
+                <span style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:#999;">Client Type</span><br/>
+                <span style="font-size:14px;font-weight:600;color:#111;text-transform:capitalize;">{{ quote.client_type or 'Individual' }}</span>
+              </td>
+            </tr>
+            {% if quote.client_type == 'company' %}
+            <tr>
+              <td style="padding:10px 0;border-bottom:1px solid #f0f0f0;">
+                <span style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:#999;">Company</span><br/>
+                <span style="font-size:14px;color:#111;">{{ quote.company_name }}{% if quote.job_title %} — {{ quote.job_title }}{% endif %}{% if quote.country %}, {{ quote.country }}{% endif %}</span>
+              </td>
+            </tr>
+            {% elif quote.client_type == 'operator' %}
+            <tr>
+              <td style="padding:10px 0;border-bottom:1px solid #f0f0f0;">
+                <span style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:#999;">Operator Details</span><br/>
+                <span style="font-size:14px;color:#111;">{{ quote.operator_name }}{% if quote.aircraft_type %} · {{ quote.aircraft_type }}{% endif %}{% if quote.fleet_size %} · Fleet: {{ quote.fleet_size }}{% endif %}{% if quote.base_airport %} · Base: {{ quote.base_airport }}{% endif %}</span>
+              </td>
+            </tr>
+            {% endif %}
+            <tr>
+              <td style="padding:10px 0;border-bottom:1px solid #f0f0f0;">
+                <span style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:#999;">Service of Interest</span><br/>
+                <span style="font-size:14px;color:#111;">{{ quote.service or 'Not specified' }}</span>
+              </td>
+            </tr>
+            {% if quote.requirements %}
+            <tr>
+              <td style="padding:10px 0;">
+                <span style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:#999;">Requirements</span><br/>
+                <span style="font-size:14px;color:#111;line-height:1.7;">{{ quote.requirements }}</span>
+              </td>
+            </tr>
+            {% endif %}
+          </table>
+
+          <div style="margin-top:28px;">
+            <a href="mailto:{{ quote.email }}" style="display:inline-block;background:#0d3b2e;color:#ffffff;font-size:12px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;padding:14px 28px;text-decoration:none;">Reply to Client</a>
+          </div>
+        </td>
+      </tr>
+
+      <!-- Footer -->
+      <tr>
+        <td style="background:#f8f8f8;padding:20px 40px;border-top:1px solid #eee;">
+          <p style="margin:0;font-size:11px;color:#aaa;text-align:center;">AviaGreene Solutions Ltd. · ops@aviagreene.com · +234 (0) 907 758 4674</p>
+        </td>
+      </tr>
+
+    </table>
+  </td></tr>
+</table>
+</body>
+</html>

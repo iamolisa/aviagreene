@@ -1,0 +1,129 @@
+{% extends "base.html" %}
+
+{% block title %}{{ post.title }} — AviaGreene Solutions{% endblock %}
+{% block extra_css %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "{{ post.title }}",
+  "description": "{{ post.excerpt or post.title }}",
+  "datePublished": "{{ post.published_at.strftime('%Y-%m-%d') }}",
+  "dateModified": "{{ post.published_at.strftime('%Y-%m-%d') }}",
+  "author": {
+    "@type": "Organization",
+    "name": "AviaGreene Solutions Ltd."
+  },
+  "publisher": {
+    "@type": "Organization",
+    "@id": "https://www.aviagreene.com/#business",
+    "name": "AviaGreene Solutions Ltd.",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://www.aviagreene.com/static/images/logo.png"
+    }
+  },
+  "url": "https://www.aviagreene.com/blog/{{ post.slug }}",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://www.aviagreene.com/blog/{{ post.slug }}"
+  }
+}
+</script>
+{% endblock %}
+{% block meta_description %}{{ post.excerpt or post.title }}{% endblock %}
+{% block meta_keywords %}{{ post.category or 'aviation' }} Nigeria, AviaGreene blog, aviation insights Nigeria{% endblock %}
+{% block canonical_path %}/blog/{{ post.slug }}{% endblock %}
+{% block og_type %}article{% endblock %}
+{% block og_title %}{{ post.title }} — AviaGreene Solutions{% endblock %}
+{% block og_description %}{{ post.excerpt or post.title }}{% endblock %}
+{% block og_url %}/blog/{{ post.slug }}{% endblock %}
+{% block twitter_title %}{{ post.title }}{% endblock %}
+{% block twitter_description %}{{ post.excerpt or post.title }}{% endblock %}
+{% block description %}{{ post.excerpt or post.title }}{% endblock %}
+
+{% block content %}
+
+<div style="padding-top:80px;"></div>
+
+<section class="page-hero">
+  <img src="https://images.unsplash.com/photo-1576153192621-7a3be10b356e?w=1920&q=80" alt="{{ post.title }}" />
+  <div class="page-hero-overlay"></div>
+  <div class="container page-hero-content">
+    <div class="hero-eyebrow" style="color:hsl(40 30% 97%/0.75);">
+      <span style="height:1px;width:40px;background:var(--gold);display:inline-block;"></span>
+      {% if post.category %}{{ post.category }}{% else %}Insights{% endif %}
+    </div>
+    <h1 style="font-size:clamp(1.75rem,3.5vw,3rem);max-width:700px;">{{ post.title }}</h1>
+    <nav class="breadcrumb">
+      <a href="{{ url_for('home') }}">Home</a>
+      <span class="sep">›</span>
+      <a href="{{ url_for('blog') }}">Blog</a>
+      <span class="sep">›</span>
+      <span class="current">{{ post.title[:40] }}{% if post.title|length > 40 %}…{% endif %}</span>
+    </nav>
+  </div>
+</section>
+
+<section class="section-lg">
+  <div class="container" style="display:grid;grid-template-columns:7fr 3fr;gap:4rem;align-items:start;">
+    <article class="fade-up">
+      <div style="display:flex;align-items:center;gap:1.5rem;margin-bottom:2.5rem;padding-bottom:1.5rem;border-bottom:1px solid var(--border);font-size:0.85rem;color:var(--muted-fg);">
+        {% if post.category %}
+        <span style="background:var(--green-soft);color:var(--green);padding:0.25rem 0.75rem;font-size:0.75rem;text-transform:uppercase;letter-spacing:0.12em;">{{ post.category }}</span>
+        {% endif %}
+        <span>{{ post.published_at.strftime('%B %d, %Y') }}</span>
+        <span>AviaGreene Team</span>
+      </div>
+      <div style="color:var(--fg);line-height:1.9;font-size:1.0625rem;">
+        {% for para in post.content.split('\n\n') %}
+          {% if para.strip() %}
+          <p style="margin-bottom:1.5rem;">{{ para.strip() }}</p>
+          {% endif %}
+        {% endfor %}
+      </div>
+      <div style="margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border);">
+        <a href="{{ url_for('blog') }}" style="font-size:0.8rem;text-transform:uppercase;letter-spacing:0.15em;color:var(--navy);border-bottom:1px solid var(--gold);padding-bottom:2px;display:inline-flex;align-items:center;gap:0.5rem;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
+          Back to Insights
+        </a>
+      </div>
+    </article>
+
+    <aside class="fade-up" style="animation-delay:0.1s;position:sticky;top:100px;">
+      <div style="background:var(--muted);padding:2rem;margin-bottom:2rem;">
+        <span class="eyebrow" style="font-size:0.65rem;">Request a Service</span>
+        <p style="margin-top:0.75rem;font-size:0.875rem;color:var(--muted-fg);line-height:1.7;">Need aviation support? Our operations desk is available 24/7.</p>
+        <a href="{{ url_for('contact') }}" class="btn btn-green btn-sm" style="margin-top:1.25rem;width:100%;justify-content:center;">
+          Get a Quote
+          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
+        </a>
+      </div>
+      <div>
+        <span class="eyebrow" style="font-size:0.65rem;">Our Services</span>
+        <div style="margin-top:1rem;display:flex;flex-direction:column;gap:1px;background:var(--border);">
+          {% for s in ['ground-handling','overflight-permits','flight-dispatch','global-fuel','catering','hotac','ground-transportation','pilgrimage'] %}
+          {% set labels = {
+            'ground-handling': 'Ground Handling',
+            'overflight-permits': 'Overflight & Permits',
+            'flight-dispatch': 'Flight Dispatch',
+            'global-fuel': 'Global Fuel Setup',
+            'catering': 'Catering',
+            'hotac': 'HOTAC',
+            'ground-transportation': 'Ground Transport',
+            'pilgrimage': 'Pilgrimage Flights'
+          } %}
+          <a href="{{ url_for('service_detail', slug=s) }}" style="background:var(--card);padding:0.875rem 1rem;font-size:0.825rem;color:var(--navy);display:flex;justify-content:space-between;align-items:center;transition:background 0.2s;" onmouseover="this.style.background='var(--muted)'" onmouseout="this.style.background='var(--card)'">
+            {{ labels[s] }}
+            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </a>
+          {% endfor %}
+        </div>
+      </div>
+    </aside>
+  </div>
+</section>
+
+{% include "_cta_band.html" %}
+
+{% endblock %}

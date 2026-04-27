@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% block title %}Global Reach — AviaGreene Solutions{% endblock %}
+{% block meta_description %}AviaGreene Solutions operates across 60+ countries on six continents — West Africa, Africa-wide, Europe, Middle East, Americas, Asia and Oceania.{% endblock %}
+{% block meta_keywords %}AviaGreene global, aviation Africa, aviation operations worldwide, Nigerian aviation international{% endblock %}
+{% block canonical_path %}/global-reach{% endblock %}
+{% block og_title %}Global Reach — AviaGreene Solutions{% endblock %}
+{% block og_description %}From Lagos to anywhere your mission demands — AviaGreene operates across 60+ countries on six continents.{% endblock %}
+{% block og_url %}/global-reach{% endblock %}
+{% block description %}A curated partner network across six continents — Africa, Europe, Middle East, Americas, Asia and Oceania.{% endblock %}
+
+{% block content %}
+
+<div style="padding-top:80px;"></div>
+
+<!-- PAGE HERO -->
+<section class="page-hero">
+  <img src="https://images.unsplash.com/photo-1507035895480-2b3156c31fc8?w=1920&q=80" alt="Global reach" />
+  <div class="page-hero-overlay"></div>
+  <div class="container page-hero-content">
+    <div class="hero-eyebrow" style="color:hsl(40 30% 97%/0.75);">
+      <span style="height:1px;width:40px;background:var(--gold);display:inline-block;"></span>
+      Global Reach
+    </div>
+    <h1>From Lagos to <span class="italic green">anywhere your mission demands.</span></h1>
+    <p class="page-hero-sub">Through a vetted network of partners and a 24/7 operations desk, we coordinate aircraft, permits, fuel and ground services across six continents.</p>
+    <nav class="breadcrumb">
+      <a href="{{ url_for('home') }}">Home</a>
+      <span class="sep">›</span>
+      <span class="current">Global Reach</span>
+    </nav>
+  </div>
+</section>
+
+<!-- MAP -->
+<section class="section-lg">
+  <div class="container">
+    <div class="fade-up" style="position:relative;overflow:hidden;background:var(--muted);">
+      <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1920&q=80" alt="AviaGreene global network" style="width:100%;aspect-ratio:16/7;object-fit:cover;" />
+      <div style="position:absolute;inset:0;background:linear-gradient(to bottom,transparent 60%,var(--muted));"></div>
+    </div>
+
+    <div class="regions-grid fade-up" style="margin-top:0;">
+      {% for r in regions %}
+      <div class="region-item">
+        <div class="region-num">Region 0{{ loop.index }}</div>
+        <h3>{{ r.name }}</h3>
+        <p>{{ r.body }}</p>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- OPS DESK -->
+<section class="section" style="background:var(--navy);color:hsl(40,30%,97%);">
+  <div class="container" style="display:grid;grid-template-columns:6fr 6fr;gap:3rem;align-items:center;">
+    <div class="fade-up">
+      <span class="eyebrow" style="color:hsl(40 30% 97% / 0.55);display:flex;align-items:center;">
+        <span style="width:28px;height:1px;background:var(--green);display:inline-block;margin-right:0.5rem;"></span>
+        Operations Desk
+      </span>
+      <h2 style="margin-top:1.25rem;font-size:clamp(2rem,3vw,3rem);color:hsl(40,30%,97%);line-height:1.15;">
+        One desk. <span class="italic" style="color:hsl(152,45%,65%);">Every timezone.</span>
+      </h2>
+      <p style="margin-top:1.25rem;color:hsl(40 30% 97% / 0.7);line-height:1.75;">
+        Our 24/7 operations team coordinates across time zones so that wherever your aircraft is flying, someone at AviaGreene has already anticipated the requirement.
+      </p>
+    </div>
+    <div class="fade-up" style="animation-delay:0.1s;">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1px;background:hsl(40 30% 97% / 0.15);">
+        {% for item in [('24/7','Operational coverage'),('60+','Countries reached'),('6','Continents served'),('100%','Regulatory compliance')] %}
+        <div style="padding:2rem;background:hsl(215 50% 18%);">
+          <div style="font-family:'Playfair Display',serif;font-size:2.25rem;font-weight:600;color:hsl(152,45%,65%);">{{ item[0] }}</div>
+          <div style="font-size:0.75rem;text-transform:uppercase;letter-spacing:0.12em;color:hsl(40 30% 97% / 0.5);margin-top:0.4rem;">{{ item[1] }}</div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% include "_cta_band.html" %}
+
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends "admin/base.html" %}
+{% block title %}Activity Log — AviaGreene Admin{% endblock %}
+
+{% block content %}
+<div class="admin-header">
+  <h1>Activity Log</h1>
+  <p style="color:var(--muted-fg);margin-top:0.25rem;font-size:0.9rem;">A record of all admin actions taken on this panel.</p>
+</div>
+
+{% if logs %}
+<div style="background:var(--card);border:1px solid var(--border);overflow:hidden;">
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Action</th>
+        <th>Date & Time</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for log in logs %}
+      <tr>
+        <td style="color:var(--muted-fg);font-size:0.8rem;width:40px;">{{ log.id }}</td>
+        <td style="font-size:0.875rem;color:var(--fg);">{{ log.action }}</td>
+        <td style="font-size:0.8rem;color:var(--muted-fg);white-space:nowrap;">{{ log.created_at.strftime('%d %b %Y, %H:%M') }} UTC</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% else %}
+<div style="text-align:center;padding:4rem 0;color:var(--muted-fg);">
+  <p>No activity recorded yet.</p>
+</div>
+{% endif %}
+{% endblock %}

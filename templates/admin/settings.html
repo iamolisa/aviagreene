@@ -1,0 +1,49 @@
+{% extends "admin/base.html" %}
+{% block title %}Settings — AviaGreene Admin{% endblock %}
+
+{% block content %}
+<div class="admin-header">
+  <h1>Settings</h1>
+  <p style="color:var(--muted-fg);margin-top:0.25rem;font-size:0.9rem;">Admin panel configuration.</p>
+</div>
+
+<div style="max-width:560px;">
+  <div style="background:var(--card);border:1px solid var(--border);padding:2rem;">
+    <h2 style="font-size:1.0625rem;color:var(--navy);margin-bottom:1.25rem;">Account</h2>
+    <table style="width:100%;border-collapse:collapse;">
+      <tr>
+        <td style="padding:0.65rem 0;border-bottom:1px solid var(--border);font-size:0.75rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted-fg);width:35%;">Username</td>
+        <td style="padding:0.65rem 0;border-bottom:1px solid var(--border);font-size:0.9rem;color:var(--navy);font-weight:500;">{{ admin_username }}</td>
+      </tr>
+      <tr>
+        <td style="padding:0.65rem 0;border-bottom:1px solid var(--border);font-size:0.75rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted-fg);">Password</td>
+        <td style="padding:0.65rem 0;border-bottom:1px solid var(--border);font-size:0.9rem;color:var(--muted-fg);">Managed via .env configuration</td>
+      </tr>
+      <tr>
+        <td style="padding:0.65rem 0;font-size:0.75rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted-fg);">Session</td>
+        <td style="padding:0.65rem 0;font-size:0.9rem;">
+          <a href="{{ url_for('admin_logout') }}" class="btn btn-sm" style="background:hsl(0,60%,93%);color:hsl(0,60%,40%);border:none;cursor:pointer;">Log Out</a>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <div style="background:var(--card);border:1px solid var(--border);padding:2rem;margin-top:1.5rem;">
+    <h2 style="font-size:1.0625rem;color:var(--navy);margin-bottom:1.25rem;">Site Overview</h2>
+    <table style="width:100%;border-collapse:collapse;">
+      <tr>
+        <td style="padding:0.65rem 0;border-bottom:1px solid var(--border);font-size:0.75rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted-fg);width:35%;">Quote Requests</td>
+        <td style="padding:0.65rem 0;border-bottom:1px solid var(--border);font-size:0.9rem;color:var(--navy);font-weight:500;">{{ total_quotes }}</td>
+      </tr>
+      <tr>
+        <td style="padding:0.65rem 0;border-bottom:1px solid var(--border);font-size:0.75rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted-fg);">Blog Posts</td>
+        <td style="padding:0.65rem 0;border-bottom:1px solid var(--border);font-size:0.9rem;color:var(--navy);font-weight:500;">{{ total_posts }}</td>
+      </tr>
+      <tr>
+        <td style="padding:0.65rem 0;font-size:0.75rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted-fg);">Testimonials</td>
+        <td style="padding:0.65rem 0;font-size:0.9rem;color:var(--navy);font-weight:500;">{{ total_testimonials }}</td>
+      </tr>
+    </table>
+  </div>
+</div>
+{% endblock %}

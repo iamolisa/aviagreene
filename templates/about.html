@@ -1,0 +1,137 @@
+{% extends "base.html" %}
+
+{% block title %}About — AviaGreene Solutions{% endblock %}
+{% block meta_description %}AviaGreene Solutions Ltd. is a Lagos-headquartered aviation services company with 20+ years of combined experience, trusted by operators and corporates across Africa and the world.{% endblock %}
+{% block meta_keywords %}about AviaGreene, Nigerian aviation company, Lagos aviation services, aviation operations Nigeria{% endblock %}
+{% block canonical_path %}/about{% endblock %}
+{% block og_title %}About AviaGreene Solutions Ltd.{% endblock %}
+{% block og_description %}A Nigerian aviation operations partner built on integrity, precision and 20+ years of combined experience.{% endblock %}
+{% block og_url %}/about{% endblock %}
+{% block description %}A Lagos-headquartered aviation operations company built on integrity, service and operational excellence — trusted across Africa and the world.{% endblock %}
+
+{% block content %}
+
+<div style="padding-top:80px;"></div>
+
+<!-- PAGE HERO -->
+<section class="page-hero">
+  <img src="https://images.unsplash.com/photo-1540962351504-03099e0a754b?w=1920&q=80" alt="About AviaGreene" />
+  <div class="page-hero-overlay"></div>
+  <div class="container page-hero-content">
+    <div class="hero-eyebrow" style="color:hsl(40 30% 97%/0.75);">
+      <span style="height:1px;width:40px;background:var(--gold);display:inline-block;"></span>
+      About AviaGreene
+    </div>
+    <h1>A Nigerian operator with <span class="italic green">global standards.</span></h1>
+    <p class="page-hero-sub">AviaGreene Solutions Ltd. is a Lagos-headquartered aviation services company built around a simple belief: African aviation deserves world-class operational excellence.</p>
+    <nav class="breadcrumb">
+      <a href="{{ url_for('home') }}">Home</a>
+      <span class="sep">›</span>
+      <span class="current">About</span>
+    </nav>
+  </div>
+</section>
+
+<!-- OUR STORY -->
+<section class="section-lg">
+  <div class="container" style="display:grid;grid-template-columns:5fr 7fr;gap:3.5rem;align-items:center;">
+    <div class="fade-up">
+      <div style="aspect-ratio:3/4;overflow:hidden;background:var(--muted);">
+        <img src="https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=900&q=80" alt="AviaGreene leadership" style="width:100%;height:100%;object-fit:cover;" />
+      </div>
+    </div>
+    <div class="fade-up" style="animation-delay:0.1s;">
+      <span class="eyebrow">Our Story</span>
+      <h2 style="margin-top:1.25rem;font-size:clamp(1.75rem,3vw,3rem);color:var(--navy);line-height:1.15;">
+        A decade of <span class="italic text-green">trusted operations.</span>
+      </h2>
+      <div style="margin-top:2rem;display:flex;flex-direction:column;gap:1.25rem;color:var(--muted-fg);font-size:1.0625rem;line-height:1.8;">
+        <p>Aviagreene Solutions Ltd stands as Nigeria’s leading flight services provider, delivering seamless, world-class aviation solutions to a diverse global clientele. With over 20 years of combined experience and a growing footprint in the United States of America, we are trusted by discerning travellers, corporations, and aviation professionals who demand only the best. We navigate the complexities of global aviation with
+precision and expertise, ensuring safety, reliability, and comfort at every stage of the journey</p>
+        <p>Our distinction lies in exceeding client expectations providing prompt, aǖordable, and customer centric services that meet the highest international standards. Whether for executive travel, luxury vacations, or mission-critical logistical support, Aviagreene delivers excellence with every operation.</p>
+        <p>At Aviagreene Solutions, we don’t just manage flights, we elevate experiences.Partner with us today and discover a world where excellence meets trust, and every journey begins with confidence.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STANDARDS -->
+<section class="section">
+  <div class="container">
+    <div class="fade-up" style="text-align:center;max-width:36rem;margin:0 auto;">
+      <span class="eyebrow" style="justify-content:center;">Accreditations & Standards</span>
+      <h2 style="margin-top:1.25rem;font-size:clamp(1.75rem,3vw,2.5rem);color:var(--navy);">
+        Certified. Compliant. <span class="italic text-green">Committed.</span>
+      </h2>
+    </div>
+    <div style="margin-top:3rem;display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1.5rem;" class="fade-up">
+      {% for cert in [
+        ('/static/images/cert-ncaa.png', 'NCAA Certificate'),
+        ('/static/images/cert-nbaa.png', 'NBAA Certificate'),
+        ('/static/images/cert-afbaa.png', 'AFBAA Certificate'),
+        ('/static/images/cert-ebaa.png', 'EBAA Certification'),
+        ('/static/images/cert-agent-foreign.png', 'Agent of Foreign Airlines'),
+        ('/static/images/cert-pilgrim.png', 'Pilgrimage Certificate'),
+        ('/static/images/cert-main.png', 'Certification'),
+      ] %}
+      <div style="background:var(--card);border:1px solid var(--border);padding:1.5rem;text-align:center;display:flex;flex-direction:column;align-items:center;gap:1rem;">
+        <img src="{{ cert[0] }}" alt="{{ cert[1] }}" loading="lazy"
+          style="width:100%;max-height:140px;object-fit:contain;filter:drop-shadow(0 2px 6px rgba(0,0,0,0.08));" />
+        <div style="font-size:0.78rem;font-weight:500;color:var(--navy);text-transform:uppercase;letter-spacing:0.08em;">{{ cert[1] }}</div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="section" style="background:var(--navy);">
+  <div class="container">
+    <div style="text-align:center;" class="fade-up">
+      <span class="eyebrow" style="color:hsl(40 30% 97% / 0.55);display:flex;justify-content:center;align-items:center;">
+        <span style="width:28px;height:1px;background:var(--green);display:inline-block;margin-right:0.5rem;"></span>
+        By the Numbers
+      </span>
+      <h2 style="margin-top:1.25rem;font-size:clamp(1.75rem,3vw,2.75rem);color:hsl(40,30%,97%);">
+        Measured in <span class="italic" style="color:hsl(152,45%,65%);">missions delivered.</span>
+      </h2>
+    </div>
+    <div class="stats-row fade-up">
+      {% for s in stats %}
+      <div class="stat-item dark">
+        <div class="stat-k">{{ s.k }}</div>
+        <div class="stat-v">{{ s.v }}</div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- VALUES -->
+<section class="section" style="background:var(--muted);">
+  <div class="container">
+    <div class="fade-up" style="text-align:center;max-width:36rem;margin:0 auto;">
+      <span class="eyebrow" style="justify-content:center;">Our Values</span>
+      <h2 style="margin-top:1.25rem;font-size:clamp(1.75rem,3vw,2.75rem);color:var(--navy);">
+        Principles we <span class="italic text-green">never compromise.</span>
+      </h2>
+    </div>
+    <div class="values-grid fade-up">
+      {% for v in values %}
+      <div class="value-item">
+        <div class="value-icon">
+          {{ value_icon(v.icon) | safe }}
+        </div>
+        <h3>{{ v.title }}</h3>
+        <p>{{ v.body }}</p>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+
+
+{% include "_cta_band.html" %}
+
+{% endblock %}

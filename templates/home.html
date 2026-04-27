@@ -1,0 +1,303 @@
+{% extends "base.html" %}
+
+{% block title %}AviaGreene Solutions — Excellence in Motion. Trust in Every Flight.{% endblock %}
+{% block meta_description %}AviaGreene Solutions Ltd. is Nigeria's leading aviation services company. Ground handling, global fuel, overflight permits, flight dispatch, catering, HOTAC, ground transport and pilgrimage flights.{% endblock %}
+{% block meta_keywords %}aviation Nigeria, aviation services Lagos, ground handling Nigeria, overflight permits, flight dispatch Nigeria, AviaGreene Solutions{% endblock %}
+{% block canonical_path %}/{% endblock %}
+{% block og_title %}AviaGreene Solutions — Excellence in Motion. Trust in Every Flight.{% endblock %}
+{% block og_description %}Nigeria's leading aviation services company — ground handling, permits, fuel, dispatch, catering, HOTAC, transport and pilgrimage flights.{% endblock %}
+{% block og_url %}/{% endblock %}
+
+{% block header_class %}transparent header-transparent{% endblock %}
+
+{% block logo_class %}logo-light{% endblock %}
+
+{% block content %}
+
+<!-- HERO -->
+<section class="hero">
+  <!-- fallback image if no video -->
+  <img class="hero-img" src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=1920&q=80" alt="Aviation" />
+  <div class="hero-overlay"></div>
+  <div class="container hero-content">
+    <div style="max-width:48rem;" class="animate-fade-in">
+      <div class="hero-eyebrow">
+        <span class="hero-eyebrow-line"></span>
+        Lagos · Global Operations
+      </div>
+      <h1>
+        Excellence<br />
+        <span class="italic">in Motion.</span><br />
+        <span class="green">Trust in Every Flight.</span>
+      </h1>
+      <p class="hero-sub">
+        AviaGreene Solutions Ltd. — Nigeria's leading aviation services partner, built on integrity and trusted by operators, corporates and individuals around the world.
+      </p>
+      <div class="hero-actions">
+        <a href="{{ url_for('contact') }}" class="btn btn-green">
+          Request a Quote
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
+        </a>
+        <a href="{{ url_for('services') }}" class="btn btn-outline">Explore Services</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section style="background:var(--navy);">
+  <div class="container">
+    <div class="stats-row" style="margin-top:0;">
+      {% for s in stats %}
+      <div class="stat-item dark fade-up" style="animation-delay:{{ loop.index0 * 0.08 }}s;">
+        <div class="stat-k">{{ s.k }}</div>
+        <div class="stat-v">{{ s.v }}</div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES PREVIEW -->
+<section class="section-lg">
+  <div class="container">
+    <div class="fade-up">
+      <span class="eyebrow">Our Services</span>
+      <h2 style="margin-top:1.25rem;font-size:clamp(2rem,4vw,3rem);color:var(--navy);max-width:32rem;line-height:1.15;">
+        Eight disciplines. <span class="italic text-green">One uncompromising standard.</span>
+      </h2>
+      <p style="margin-top:1.25rem;max-width:38rem;color:var(--muted-fg);font-size:1.0625rem;line-height:1.7;">
+        Each of our eight service lines is delivered by specialists, supported by a 24/7 operations desk and held to the same standard our clients expect from the world's leading operators.
+      </p>
+    </div>
+
+    <!-- Services Carousel -->
+    <div style="position:relative;margin-top:4rem;" class="fade-up">
+      <div id="services-carousel" style="overflow:hidden;">
+        <div id="services-track" style="display:flex;transition:transform 0.45s cubic-bezier(0.4,0,0.2,1);gap:1px;background:var(--border);">
+          {% for s in services %}
+          <a href="{{ url_for('service_detail', slug=s.slug) }}"
+             style="min-width:calc(33.333% - 1px);flex-shrink:0;background:var(--card);padding:2.5rem;display:flex;flex-direction:column;gap:1rem;text-decoration:none;transition:background 0.2s;box-sizing:border-box;"
+             onmouseover="this.style.background='var(--muted)'"
+             onmouseout="this.style.background='var(--card)'">
+            <div style="width:40px;height:40px;background:var(--green-soft);display:flex;align-items:center;justify-content:center;color:var(--green);">
+              {{ icon_svg(s.icon) | safe }}
+            </div>
+            <h3 style="font-size:1.25rem;color:var(--navy);">{{ s.title }}</h3>
+            <p style="font-style:italic;color:var(--green);font-family:'Playfair Display',serif;font-size:0.875rem;">{{ s.tagline }}</p>
+            <p style="font-size:0.875rem;color:var(--muted-fg);line-height:1.65;flex:1;">{{ s.blurb }}</p>
+            <span style="font-size:0.7rem;text-transform:uppercase;letter-spacing:0.18em;color:var(--navy);border-bottom:1px solid var(--gold);padding-bottom:2px;align-self:flex-start;display:inline-flex;align-items:center;gap:0.4rem;">
+              Learn more
+              <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
+            </span>
+          </a>
+          {% endfor %}
+        </div>
+      </div>
+
+      <!-- Prev / Next arrows -->
+      <button onclick="scrollCarousel('services', -1)" aria-label="Previous services"
+        style="position:absolute;top:50%;left:-20px;transform:translateY(-50%);width:40px;height:40px;border-radius:50%;background:var(--navy);border:1px solid var(--border);color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:2;transition:background 0.2s;"
+        onmouseover="this.style.background='var(--green)'" onmouseout="this.style.background='var(--navy)'">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+      </button>
+      <button onclick="scrollCarousel('services', 1)" aria-label="Next services"
+        style="position:absolute;top:50%;right:-20px;transform:translateY(-50%);width:40px;height:40px;border-radius:50%;background:var(--navy);border:1px solid var(--border);color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:2;transition:background 0.2s;"
+        onmouseover="this.style.background='var(--green)'" onmouseout="this.style.background='var(--navy)'">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+      </button>
+
+      <!-- Dots -->
+      <div id="services-dots" style="display:flex;justify-content:center;gap:0.5rem;margin-top:1.75rem;"></div>
+    </div>
+
+    <div style="margin-top:2rem;text-align:center;">
+      <a href="{{ url_for('services') }}" class="btn btn-navy">View All Services</a>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT TEASER -->
+<section class="section" style="background:var(--muted);">
+  <div class="container" style="display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;">
+    <div class="fade-up">
+      <div style="aspect-ratio:4/5;overflow:hidden;position:relative;background:var(--navy);">
+        <img src="https://images.unsplash.com/photo-1540962351504-03099e0a754b?w=900&q=80" alt="AviaGreene aviation" style="width:100%;height:100%;object-fit:cover;opacity:0.85;" />
+      </div>
+    </div>
+    <div class="fade-up" style="animation-delay:0.1s;">
+      <span class="eyebrow">About AviaGreene</span>
+      <h2 style="margin-top:1.25rem;font-size:clamp(1.75rem,3vw,2.75rem);color:var(--navy);line-height:1.2;">
+        A decade of <span class="italic text-green">trusted operations.</span>
+      </h2>
+      <p style="margin-top:1.5rem;color:var(--muted-fg);line-height:1.8;font-size:1.0625rem;">
+        Founded in Lagos and operating across six continents, AviaGreene was built by aviation professionals committed to closing the gap between global standards and local execution.
+      </p>
+      <p style="margin-top:1rem;color:var(--muted-fg);line-height:1.8;font-size:1.0625rem;">
+        We act as a trusted intermediary between aircraft operators, regulators, fuel suppliers and the principals they serve — delivering every service with the responsiveness only a focused, owner-led firm can offer.
+      </p>
+      <a href="{{ url_for('about') }}" class="btn btn-navy" style="margin-top:2rem;">Our Story</a>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS CAROUSEL -->
+<section class="section" style="background:var(--navy);color:hsl(40,30%,97%);">
+  <div class="container">
+    <div style="text-align:center;max-width:42rem;margin:0 auto;" class="fade-up">
+      <span class="eyebrow" style="color:hsl(40 30% 97% / 0.55);display:flex;justify-content:center;align-items:center;">
+        <span style="width:28px;height:1px;background:var(--green);display:inline-block;margin-right:0.5rem;"></span>
+        Client Testimonials
+      </span>
+      <h2 style="margin-top:1.25rem;font-size:clamp(1.75rem,3vw,2.75rem);color:hsl(40,30%,97%);line-height:1.2;">
+        Trusted by those who <span class="italic" style="color:hsl(152,45%,65%);">demand the best.</span>
+      </h2>
+    </div>
+
+    {% if home_testimonials %}
+    <div style="position:relative;margin-top:4rem;" class="fade-up">
+      <div id="testimonials-carousel" style="overflow:hidden;">
+        <div id="testimonials-track" style="display:flex;transition:transform 0.45s cubic-bezier(0.4,0,0.2,1);gap:1px;">
+          {% for t in home_testimonials %}
+          <div style="min-width:100%;flex-shrink:0;background:hsl(215 50% 18%);padding:3rem;box-sizing:border-box;display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center;">
+            <div>
+              <div style="display:flex;gap:3px;margin-bottom:1.5rem;">
+                {% for i in range(5) %}
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="hsl(38,55%,55%)" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                {% endfor %}
+              </div>
+              <p style="font-size:1.0625rem;color:hsl(40,30%,97%);line-height:1.9;font-style:italic;">"{{ t.body }}"</p>
+            </div>
+            <div style="display:flex;flex-direction:column;align-items:flex-start;gap:1.25rem;border-left:1px solid hsl(40 30% 97% / 0.1);padding-left:3rem;">
+              <div style="width:56px;height:56px;border-radius:50%;background:var(--green);display:flex;align-items:center;justify-content:center;font-size:1.125rem;font-weight:700;color:#fff;">{{ t.initials }}</div>
+              <div>
+                <div style="font-size:1rem;font-weight:600;color:hsl(40,30%,97%);">{{ t.name }}</div>
+                {% if t.title %}<div style="font-size:0.85rem;color:hsl(40 30% 97% / 0.5);margin-top:0.25rem;">{{ t.title }}</div>{% endif %}
+              </div>
+              <a href="{{ url_for('testimonials') }}" style="font-size:0.72rem;text-transform:uppercase;letter-spacing:0.18em;color:var(--green);border-bottom:1px solid var(--green);padding-bottom:2px;text-decoration:none;margin-top:0.5rem;">Read All Testimonials</a>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+
+      <!-- Arrows -->
+      <button onclick="scrollCarousel('testimonials', -1)" aria-label="Previous testimonial"
+        style="position:absolute;top:50%;left:-20px;transform:translateY(-50%);width:40px;height:40px;border-radius:50%;background:hsl(215 50% 25%);border:1px solid hsl(40 30% 97% / 0.15);color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background 0.2s;"
+        onmouseover="this.style.background='var(--green)'" onmouseout="this.style.background='hsl(215 50% 25%)'">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+      </button>
+      <button onclick="scrollCarousel('testimonials', 1)" aria-label="Next testimonial"
+        style="position:absolute;top:50%;right:-20px;transform:translateY(-50%);width:40px;height:40px;border-radius:50%;background:hsl(215 50% 25%);border:1px solid hsl(40 30% 97% / 0.15);color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background 0.2s;"
+        onmouseover="this.style.background='var(--green)'" onmouseout="this.style.background='hsl(215 50% 25%)'">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+      </button>
+
+      <!-- Dots -->
+      <div id="testimonials-dots" style="display:flex;justify-content:center;gap:0.5rem;margin-top:2rem;"></div>
+    </div>
+    {% else %}
+    <div style="text-align:center;margin-top:3rem;color:hsl(40 30% 97% / 0.4);font-size:0.9rem;">
+      Client testimonials coming soon.
+    </div>
+    {% endif %}
+  </div>
+</section>
+
+<!-- CTA BAND -->
+{% include "_cta_band.html" %}
+
+{% block extra_js %}
+<script>
+// Generic carousel engine
+const carousels = {};
+
+function initCarousel(id, total, perView) {
+  carousels[id] = { index: 0, total: total, perView: perView };
+  renderDots(id);
+  updateCarousel(id);
+}
+
+function scrollCarousel(id, dir) {
+  const c = carousels[id];
+  if (!c) return;
+  const maxIndex = c.total - c.perView;
+  c.index = Math.max(0, Math.min(c.index + dir, maxIndex));
+  updateCarousel(id);
+}
+
+function updateCarousel(id) {
+  const c = carousels[id];
+  const track = document.getElementById(id + '-track');
+  if (!track) return;
+  const slideW = track.children[0] ? track.children[0].offsetWidth : 0;
+  track.style.transform = `translateX(-${c.index * (slideW + 1)}px)`;
+  renderDots(id);
+}
+
+function renderDots(id) {
+  const c = carousels[id];
+  const container = document.getElementById(id + '-dots');
+  if (!container) return;
+  const numDots = c.total - c.perView + 1;
+  container.innerHTML = '';
+  for (let i = 0; i < numDots; i++) {
+    const dot = document.createElement('button');
+    dot.style.cssText = `width:8px;height:8px;border-radius:50%;border:none;cursor:pointer;padding:0;transition:all 0.2s;background:${i === c.index ? 'var(--green)' : 'rgba(255,255,255,0.2)'};transform:${i === c.index ? 'scale(1.3)' : 'scale(1)'};`;
+    dot.setAttribute('aria-label', `Go to slide ${i + 1}`);
+    dot.onclick = () => { carousels[id].index = i; updateCarousel(id); };
+    container.appendChild(dot);
+  }
+}
+
+function getServicesPerView() {
+  return window.innerWidth < 640 ? 1 : window.innerWidth < 1024 ? 2 : 3;
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  // Services carousel
+  const sTrack = document.getElementById('services-track');
+  if (sTrack) {
+    const perView = getServicesPerView();
+    // Update slide widths on services for responsive
+    Array.from(sTrack.children).forEach(el => {
+      el.style.minWidth = `calc(${100 / perView}% - 1px)`;
+    });
+    initCarousel('services', sTrack.children.length, perView);
+  }
+
+  // Testimonials carousel (always 1 at a time)
+  const tTrack = document.getElementById('testimonials-track');
+  if (tTrack) {
+    initCarousel('testimonials', tTrack.children.length, 1);
+  }
+
+  // Auto-advance testimonials every 6 seconds
+  setInterval(function() {
+    const c = carousels['testimonials'];
+    if (!c) return;
+    const maxIndex = c.total - c.perView;
+    c.index = c.index >= maxIndex ? 0 : c.index + 1;
+    updateCarousel('testimonials');
+  }, 6000);
+
+  // Recompute on resize
+  window.addEventListener('resize', function() {
+    const sTrack = document.getElementById('services-track');
+    if (sTrack) {
+      const perView = getServicesPerView();
+      Array.from(sTrack.children).forEach(el => {
+        el.style.minWidth = `calc(${100 / perView}% - 1px)`;
+      });
+      const c = carousels['services'];
+      if (c) {
+        c.perView = perView;
+        c.index = 0;
+        updateCarousel('services');
+      }
+    }
+  });
+});
+</script>
+{% endblock %}
+{% endblock %}

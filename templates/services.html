@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block title %}Services — AviaGreene Solutions{% endblock %}
+{% block meta_description %}Eight aviation service lines delivered to one uncompromising standard: ground handling, global fuel, overflight permits, flight dispatch, catering, HOTAC, ground transport and pilgrimage flights.{% endblock %}
+{% block meta_keywords %}aviation services Nigeria, ground handling, overflight permits Africa, flight dispatch, aviation fuel Nigeria, pilgrimage flights Nigeria{% endblock %}
+{% block canonical_path %}/services{% endblock %}
+{% block og_title %}Aviation Services — AviaGreene Solutions{% endblock %}
+{% block og_description %}Eight aviation disciplines. One uncompromising standard. Delivered by specialists, 24/7.{% endblock %}
+{% block og_url %}/services{% endblock %}
+{% block description %}Six aviation services delivered to a single uncompromising standard: ground handling, traffic rights, charter, fuel, dispatch and concierge.{% endblock %}
+
+{% block content %}
+
+<div style="padding-top:80px;"></div>
+
+<!-- PAGE HERO -->
+<section class="page-hero">
+  <img src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=1920&q=80" alt="AviaGreene Services" />
+  <div class="page-hero-overlay"></div>
+  <div class="container page-hero-content">
+    <div class="hero-eyebrow" style="color:hsl(40 30% 97%/0.75);">
+      <span style="height:1px;width:40px;background:var(--gold);display:inline-block;"></span>
+      Our Services
+    </div>
+    <h1>Eight disciplines.<br /><span class="italic green">One uncompromising standard.</span></h1>
+    <p class="page-hero-sub">Each service is delivered by specialists, supported by 24/7 operational oversight and held to the same standard our clients expect from the world's leading operators.</p>
+    <nav class="breadcrumb">
+      <a href="{{ url_for('home') }}">Home</a>
+      <span class="sep">›</span>
+      <span class="current">Services</span>
+    </nav>
+  </div>
+</section>
+
+<!-- SERVICES LIST -->
+<section class="section-lg">
+  <div class="container">
+    <div class="services-grid">
+      {% for s in services %}
+      <article class="service-card fade-up">
+        <div class="service-img">
+          <img src="{{ service_image(s.slug) }}" alt="{{ s.title }}" loading="lazy" />
+        </div>
+        <div class="service-body">
+          <div class="service-num">
+            <span style="color:var(--green);margin-right:0.5rem;">0{{ loop.index }}</span> / Service
+          </div>
+          <h2>{{ s.title }}</h2>
+          <p class="service-tagline">{{ s.tagline }}</p>
+          <p class="service-blurb">{{ s.blurb }}</p>
+          <ul class="service-highlights">
+            {% for h in s.highlights %}
+            <li>
+              <span class="highlight-dot"></span>
+              {{ h }}
+            </li>
+            {% endfor %}
+          </ul>
+          <a href="{{ url_for('service_detail', slug=s.slug) }}" class="service-link">
+            Learn more
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
+          </a>
+        </div>
+      </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% include "_cta_band.html" %}
+
+{% endblock %}

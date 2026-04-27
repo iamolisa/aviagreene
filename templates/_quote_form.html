@@ -1,0 +1,52 @@
+{% if quote_success is defined and quote_success %}
+<div class="quote-form form-success">
+  <div class="form-success-icon">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="m9 12 2 2 4-4"/></svg>
+  </div>
+  <h3>Thank you.</h3>
+  <p>Your request has been received. Our operations team will be in touch shortly.</p>
+</div>
+{% else %}
+<form class="quote-form" method="POST" action="{{ url_for('contact') }}">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  <div class="form-row">
+    <div class="form-field">
+      <label>Full name <span class="req">*</span></label>
+      <input type="text" name="full_name" required placeholder="Your full name" />
+    </div>
+    <div class="form-field">
+      <label>Company</label>
+      <input type="text" name="company" placeholder="Company name" />
+    </div>
+  </div>
+  <div class="form-row form-space">
+    <div class="form-field">
+      <label>Email <span class="req">*</span></label>
+      <input type="email" name="email" required placeholder="you@example.com" />
+    </div>
+    <div class="form-field">
+      <label>Phone</label>
+      <input type="tel" name="phone" placeholder="+234 ..." />
+    </div>
+  </div>
+  <div class="form-field form-space">
+    <label>Service of interest</label>
+    <select name="service">
+      {% if services is defined %}
+        {% for s in services %}
+        <option value="{{ s.title }}" {% if default_service == s.slug %}selected{% endif %}>{{ s.title }}</option>
+        {% endfor %}
+      {% endif %}
+      <option value="Multiple / Not sure">Multiple / Not sure</option>
+    </select>
+  </div>
+  <div class="form-field form-space">
+    <label>Tell us about your requirements</label>
+    <textarea name="requirements" rows="4" placeholder="Describe your flight, route or operational need..."></textarea>
+  </div>
+  <button type="submit" class="btn btn-navy" style="width:100%;justify-content:center;margin-top:1.25rem;">
+    Submit Request
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
+  </button>
+</form>
+{% endif %}

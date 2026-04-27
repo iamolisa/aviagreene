@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block title %}Blog & Insights — AviaGreene Solutions{% endblock %}
+{% block meta_description %}Aviation intelligence, industry news and operational insights from the AviaGreene Solutions team.{% endblock %}
+{% block meta_keywords %}aviation blog Nigeria, aviation news Africa, flight operations insights, AviaGreene blog{% endblock %}
+{% block canonical_path %}/blog{% endblock %}
+{% block og_title %}Aviation Insights — AviaGreene Solutions{% endblock %}
+{% block og_description %}Aviation intelligence, regulatory updates and operational guidance from our operations desk.{% endblock %}
+{% block og_url %}/blog{% endblock %}
+{% block description %}Aviation insights, industry news and operational guidance from the AviaGreene team.{% endblock %}
+
+{% block content %}
+
+<div style="padding-top:80px;"></div>
+
+<section class="page-hero">
+  <img src="https://images.unsplash.com/photo-1576153192621-7a3be10b356e?w=1920&q=80" alt="Blog" />
+  <div class="page-hero-overlay"></div>
+  <div class="container page-hero-content">
+    <div class="hero-eyebrow" style="color:hsl(40 30% 97%/0.75);">
+      <span style="height:1px;width:40px;background:var(--gold);display:inline-block;"></span>
+      Blog & Insights
+    </div>
+    <h1>Aviation intelligence, <span class="italic green">from the operations desk.</span></h1>
+    <p class="page-hero-sub">News, analysis and operational insights from the team at AviaGreene Solutions.</p>
+    <nav class="breadcrumb">
+      <a href="{{ url_for('home') }}">Home</a>
+      <span class="sep">›</span>
+      <span class="current">Blog</span>
+    </nav>
+  </div>
+</section>
+
+<section class="section-lg">
+  <div class="container">
+    {% if posts %}
+    <div class="blog-grid">
+      {% for post in posts %}
+      <article class="blog-card fade-up">
+        <div class="blog-card-body">
+          {% if post.category %}
+          <div class="blog-category">{{ post.category }}</div>
+          {% endif %}
+          <h3>{{ post.title }}</h3>
+          <p>{{ post.excerpt or post.content[:200] ~ '...' }}</p>
+          <div class="blog-card-date">{{ post.published_at.strftime('%B %d, %Y') }}</div>
+        </div>
+      </article>
+      {% endfor %}
+    </div>
+    {% else %}
+    <div style="text-align:center;padding:4rem 0;color:var(--muted-fg);">
+      <p>No posts published yet. Check back soon.</p>
+    </div>
+    {% endif %}
+  </div>
+</section>
+
+{% include "_cta_band.html" %}
+
+{% endblock %}

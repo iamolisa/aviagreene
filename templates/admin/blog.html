@@ -1,0 +1,54 @@
+{% extends "admin/base.html" %}
+{% block title %}Blog Posts — AviaGreene Admin{% endblock %}
+
+{% block content %}
+<div class="admin-header" style="display:flex;justify-content:space-between;align-items:flex-start;">
+  <div>
+    <h1>Blog Posts</h1>
+    <p style="color:var(--muted-fg);margin-top:0.25rem;font-size:0.9rem;">Manage blog posts and insights.</p>
+  </div>
+  <a href="{{ url_for('admin_blog_new') }}" class="btn btn-green btn-sm">+ New Post</a>
+</div>
+
+<table class="data-table">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Title</th>
+      <th>Category</th>
+      <th>Status</th>
+      <th>Published</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for post in posts %}
+    <tr>
+      <td style="color:var(--muted-fg);font-size:0.8rem;">{{ post.id }}</td>
+      <td>
+        <strong>{{ post.title }}</strong><br />
+        <span style="font-size:0.8rem;color:var(--muted-fg);">/blog/{{ post.slug }}</span>
+      </td>
+      <td>{{ post.category or '—' }}</td>
+      <td>
+        <span class="badge {% if post.is_published %}badge-new{% else %}badge-done{% endif %}">
+          {{ 'Published' if post.is_published else 'Draft' }}
+        </span>
+      </td>
+      <td style="font-size:0.8rem;color:var(--muted-fg);">{{ post.published_at.strftime('%d %b %Y') }}</td>
+      <td>
+        <div style="display:flex;gap:0.5rem;">
+          <a href="{{ url_for('admin_blog_edit', post_id=post.id) }}" class="btn btn-sm btn-navy" style="padding:0.3rem 0.8rem;">Edit</a>
+          <form method="POST" action="{{ url_for('admin_blog_delete', post_id=post.id) }}" onsubmit="return confirm('Delete this post?');" style="display:inline;">
+              <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <button type="submit" class="btn btn-sm" style="padding:0.3rem 0.8rem;background:hsl(0,60%,93%);color:hsl(0,60%,40%);border:none;cursor:pointer;">Delete</button>
+          </form>
+        </div>
+      </td>
+    </tr>
+    {% else %}
+    <tr><td colspan="6" style="text-align:center;color:var(--muted-fg);padding:2rem;">No blog posts yet. <a href="{{ url_for('admin_blog_new') }}">Create one.</a></td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

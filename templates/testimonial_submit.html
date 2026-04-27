@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% block title %}Share Your Experience — AviaGreene Solutions{% endblock %}
+{% block meta_description %}Share your experience with AviaGreene Solutions. Submit a testimonial and let others know about the standard of service you received.{% endblock %}
+{% block canonical_path %}/testimonials/submit{% endblock %}
+
+{% block content %}
+<div style="padding-top:80px;"></div>
+
+<section class="page-hero">
+  <img src="https://images.unsplash.com/photo-1529074963764-98f45c47344b?w=1920&q=80" alt="Share your experience" loading="lazy" />
+  <div class="page-hero-overlay"></div>
+  <div class="container page-hero-content">
+    <div class="hero-eyebrow" style="color:hsl(40 30% 97%/0.75);">
+      <span style="height:1px;width:40px;background:var(--gold);display:inline-block;"></span>
+      Client Testimonials
+    </div>
+    <h1>Share your <span class="italic green">experience.</span></h1>
+    <p class="page-hero-sub">We'd love to hear about your experience with AviaGreene. Your feedback helps others make informed decisions.</p>
+    <nav class="breadcrumb">
+      <a href="{{ url_for('home') }}">Home</a>
+      <span class="sep">›</span>
+      <a href="{{ url_for('testimonials') }}">Testimonials</a>
+      <span class="sep">›</span>
+      <span class="current">Submit</span>
+    </nav>
+  </div>
+</section>
+
+<section class="section-lg">
+  <div class="container" style="max-width:640px;">
+    {% if success %}
+    <div style="background:var(--muted);border-left:3px solid var(--green);padding:2.5rem;text-align:center;">
+      <div style="font-size:2.5rem;margin-bottom:1rem;">✓</div>
+      <h2 style="font-size:1.5rem;color:var(--navy);margin-bottom:0.75rem;">Thank you for your feedback.</h2>
+      <p style="color:var(--muted-fg);line-height:1.8;">Your testimonial has been received and will appear on the site once reviewed by our team.</p>
+      <div style="margin-top:2rem;display:flex;justify-content:center;gap:1rem;flex-wrap:wrap;">
+        <a href="{{ url_for('testimonials') }}" class="btn btn-green btn-sm">View Testimonials</a>
+        <a href="{{ url_for('home') }}" class="btn btn-navy btn-sm">Back to Home</a>
+      </div>
+    </div>
+    {% else %}
+    <div class="fade-up">
+      <span class="eyebrow">Your Testimonial</span>
+      <h2 style="margin-top:1rem;font-size:clamp(1.5rem,2.5vw,2.25rem);color:var(--navy);line-height:1.2;margin-bottom:2rem;">
+        Tell us about your <span class="italic text-green">experience.</span>
+      </h2>
+
+      <form method="POST" action="{{ url_for('testimonial_submit') }}" style="display:flex;flex-direction:column;gap:1.5rem;">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+        <div class="form-row">
+          <div class="form-field">
+            <label>Full Name <span class="req">*</span></label>
+            <input type="text" name="name" required placeholder="Your full name" />
+          </div>
+          <div class="form-field">
+            <label>Job Title / Organisation</label>
+            <input type="text" name="title" placeholder="e.g. CEO, Acme Aviation" />
+          </div>
+        </div>
+
+        <div class="form-field">
+          <label>Your Experience <span class="req">*</span></label>
+          <textarea name="body" rows="6" required placeholder="Tell us about the service you received from AviaGreene — the more specific, the better..."></textarea>
+          <div style="font-size:0.78rem;color:var(--muted-fg);margin-top:0.35rem;">Your testimonial will be reviewed before appearing on the site.</div>
+        </div>
+
+        <button type="submit" class="btn btn-green" style="align-self:flex-start;">
+          Submit Testimonial
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
+        </button>
+      </form>
+    </div>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}

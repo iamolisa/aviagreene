@@ -1,0 +1,146 @@
+{% extends "admin/base.html" %}
+{% block title %}Quote #{{ quote.id }} — AviaGreene Admin{% endblock %}
+
+{% block content %}
+<div class="admin-header" style="display:flex;justify-content:space-between;align-items:flex-start;">
+  <div>
+    <h1>Quote Request #{{ '%05d' % quote.id }}</h1>
+    <p style="color:var(--muted-fg);margin-top:0.25rem;font-size:0.9rem;">
+      Submitted {{ quote.created_at.strftime('%d %B %Y at %H:%M') }} UTC
+    </p>
+  </div>
+  <a href="{{ url_for('admin_quotes') }}" class="btn btn-sm btn-navy">← Back to Quotes</a>
+</div>
+
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;max-width:900px;">
+
+  <!-- Contact Info -->
+  <div style="background:var(--card);border:1px solid var(--border);padding:1.75rem;">
+    <p style="font-size:0.65rem;text-transform:uppercase;letter-spacing:0.18em;color:var(--muted-fg);margin:0 0 1.25rem;">Contact Information</p>
+    <table style="width:100%;border-collapse:collapse;">
+      <tr>
+        <td style="padding:0.6rem 0;border-bottom:1px solid var(--border);font-size:0.75rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted-fg);width:40%;">Name</td>
+        <td style="padding:0.6rem 0;border-bottom:1px solid var(--border);font-size:0.9rem;font-weight:600;color:var(--navy);">{{ quote.full_name }}</td>
+      </tr>
+      <tr>
+        <td style="padding:0.6rem 0;border-bottom:1px solid var(--border);font-size:0.75rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted-fg);">Email</td>
+        <td style="padding:0.6rem 0;border-bottom:1px solid var(--border);font-size:0.9rem;">
+          <a href="mailto:{{ quote.email }}" style="color:var(--green);">{{ quote.email }}</a>
+        </td>
+      </tr>
+      <tr>
+        <td style="padding:0.6rem 0;border-bottom:1px solid var(--border);font-size:0.75rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted-fg);">Phone</td>
+        <td style="padding:0.6rem 0;border-bottom:1px solid var(--border);font-size:0.9rem;">{{ quote.phone or '—' }}</td>
+      </tr>
+      <tr>
+        <td style="padding:0.6rem 0;font-size:0.75rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted-fg);">Client Type</td>
+        <td style="padding:0.6rem 0;">
+          <span class="badge {% if quote.client_type == 'company' %}badge-new{% elif quote.client_type == 'operator' %}badge-done{% else %}badge-pending{% endif %}" style="text-transform:capitalize;">
+            {{ quote.client_type or 'Individual' }}
+          </span>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- Organisation Details -->
+  <div style="background:var(--card);border:1px solid var(--border);padding:1.75rem;">
+    <p style="font-size:0.65rem;text-transform:uppercase;letter-spacing:0.18em;color:var(--muted-fg);margin:0 0 1.25rem;">Organisation Details</p>
+    {% if quote.client_type == 'company' %}
+    <table style="width:100%;border-collapse:collapse;">
+      <tr>
+        <td style="padding:0.6rem 0;border-bottom:1px solid var(--border);font-size:0.75rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted-fg);width:40%;">Company</td>
+        <td style="padding:0.6rem 0;border-bottom:1px solid var(--border);font-size:0.9rem;font-weight:600;color:var(--navy);">{{ quote.company_name or '—' }}</td>
+      </tr>
+      <tr>
+        <td style="padding:0.6rem 0;border-bottom:1px solid var(--border);font-size:0.75rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted-fg);">Job Title</td>
+        <td style="padding:0.6rem 0;border-bottom:1px solid var(--border);font-size:0.9rem;">{{ quote.job_title or '—' }}</td>
+      </tr>
+      <tr>
+        <td style="padding:0.6rem 0;font-size:0.75rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted-fg);">Country</td>
+        <td style="padding:0.6rem 0;font-size:0.9rem;">{{ quote.country or '—' }}</td>
+      </tr>
+    </table>
+    {% elif quote.client_type == 'operator' %}
+    <table style="width:100%;border-collapse:collapse;">
+      <tr>
+        <td style="padding:0.6rem 0;border-bottom:1px solid var(--border);font-size:0.75rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted-fg);width:40%;">Operator</td>
+        <td style="padding:0.6rem 0;border-bottom:1px solid var(--border);font-size:0.9rem;font-weight:600;color:var(--navy);">{{ quote.operator_name or '—' }}</td>
+      </tr>
+      <tr>
+        <td style="padding:0.6rem 0;border-bottom:1px solid var(--border);font-size:0.75rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted-fg);">Aircraft Type</td>
+        <td style="padding:0.6rem 0;border-bottom:1px solid var(--border);font-size:0.9rem;">{{ quote.aircraft_type or '—' }}</td>
+      </tr>
+      <tr>
+        <td style="padding:0.6rem 0;border-bottom:1px solid var(--border);font-size:0.75rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted-fg);">Fleet Size</td>
+        <td style="padding:0.6rem 0;border-bottom:1px solid var(--border);font-size:0.9rem;">{{ quote.fleet_size or '—' }}</td>
+      </tr>
+      <tr>
+        <td style="padding:0.6rem 0;font-size:0.75rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted-fg);">Base Airport</td>
+        <td style="padding:0.6rem 0;font-size:0.9rem;">{{ quote.base_airport or '—' }}</td>
+      </tr>
+    </table>
+    {% else %}
+    <p style="color:var(--muted-fg);font-size:0.9rem;">Individual enquiry — no organisation details.</p>
+    {% endif %}
+  </div>
+
+  <!-- Request Details -->
+  <div style="background:var(--card);border:1px solid var(--border);padding:1.75rem;grid-column:1/-1;">
+    <p style="font-size:0.65rem;text-transform:uppercase;letter-spacing:0.18em;color:var(--muted-fg);margin:0 0 1.25rem;">Request Details</p>
+    <table style="width:100%;border-collapse:collapse;">
+      <tr>
+        <td style="padding:0.6rem 0;border-bottom:1px solid var(--border);font-size:0.75rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted-fg);width:20%;vertical-align:top;">Service</td>
+        <td style="padding:0.6rem 0;border-bottom:1px solid var(--border);font-size:0.9rem;font-weight:600;color:var(--navy);">{{ quote.service or '—' }}</td>
+      </tr>
+      <tr>
+        <td style="padding:0.75rem 0;border-bottom:1px solid var(--border);font-size:0.75rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted-fg);vertical-align:top;">Requirements</td>
+        <td style="padding:0.75rem 0;border-bottom:1px solid var(--border);font-size:0.9rem;line-height:1.8;color:var(--fg);">{{ quote.requirements or '—' }}</td>
+      </tr>
+      <tr>
+        <td style="padding:0.6rem 0;font-size:0.75rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted-fg);">Reference</td>
+        <td style="padding:0.6rem 0;font-size:0.85rem;font-family:'Courier New',monospace;color:var(--green);">AVG-{{ '%05d' % quote.id }}</td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- Status Update -->
+  <div style="background:var(--card);border:1px solid var(--border);padding:1.75rem;">
+    <p style="font-size:0.65rem;text-transform:uppercase;letter-spacing:0.18em;color:var(--muted-fg);margin:0 0 1.25rem;">Update Status</p>
+    <form method="POST" action="{{ url_for('admin_quote_status', quote_id=quote.id) }}" style="display:flex;gap:0.75rem;align-items:center;">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <select name="status" style="flex:1;border:1px solid var(--border);padding:0.6rem;background:var(--bg);font-size:0.875rem;">
+        <option value="new" {% if quote.status == 'new' %}selected{% endif %}>New</option>
+        <option value="in-progress" {% if quote.status == 'in-progress' %}selected{% endif %}>In Progress</option>
+        <option value="done" {% if quote.status == 'done' %}selected{% endif %}>Done</option>
+      </select>
+      <button type="submit" class="btn btn-green btn-sm">Update</button>
+    </form>
+    <p style="margin-top:0.75rem;font-size:0.8rem;color:var(--muted-fg);">
+      Current: <span class="badge badge-{{ quote.status }}">{{ quote.status }}</span>
+    </p>
+  </div>
+
+  <!-- Quick Actions -->
+  <div style="background:var(--card);border:1px solid var(--border);padding:1.75rem;">
+    <p style="font-size:0.65rem;text-transform:uppercase;letter-spacing:0.18em;color:var(--muted-fg);margin:0 0 1.25rem;">Quick Actions</p>
+    <div style="display:flex;flex-direction:column;gap:0.75rem;">
+      <a href="mailto:{{ quote.email }}?subject=Re: Your Aviation Request (AVG-{{ '%05d' % quote.id }})" class="btn btn-navy btn-sm" style="justify-content:center;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+        Reply via Email
+      </a>
+      {% if quote.phone %}
+      <a href="https://wa.me/{{ quote.phone | replace(' ','') | replace('+','') | replace('-','') }}" target="_blank" class="btn btn-sm" style="background:hsl(142,70%,45%);color:#fff;justify-content:center;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.99 2C6.477 2 2 6.484 2 12.017c0 1.99.583 3.849 1.565 5.423L2 22l4.644-1.541A9.97 9.97 0 0 0 11.99 22C17.523 22 22 17.516 22 11.983 22 6.477 17.523 2 11.99 2z" fill-rule="evenodd" clip-rule="evenodd"/></svg>
+        WhatsApp
+      </a>
+      {% endif %}
+      <form method="POST" action="{{ url_for('admin_quote_delete', quote_id=quote.id) }}" onsubmit="return confirm('Delete this request permanently?');">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <button type="submit" class="btn btn-sm" style="width:100%;justify-content:center;background:hsl(0,60%,93%);color:hsl(0,60%,40%);border:none;cursor:pointer;">Delete Request</button>
+      </form>
+    </div>
+  </div>
+
+</div>
+{% endblock %}

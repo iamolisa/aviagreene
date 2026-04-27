@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Server Error — AviaGreene Solutions{% endblock %}
+
+{% block content %}
+<div style="padding-top:80px;"></div>
+
+<section style="min-height:70vh;display:flex;align-items:center;justify-content:center;padding:4rem 2rem;background:var(--muted);">
+  <div style="text-align:center;max-width:520px;">
+    <div style="font-family:'Playfair Display',serif;font-size:clamp(6rem,15vw,10rem);font-weight:700;line-height:1;color:var(--navy);opacity:0.08;margin-bottom:-1rem;">500</div>
+    <div style="margin-bottom:1.5rem;">
+      <span class="eyebrow" style="justify-content:center;">Server Error</span>
+    </div>
+    <h1 style="font-size:clamp(1.75rem,3vw,2.5rem);color:var(--navy);line-height:1.2;margin-bottom:1rem;">
+      Something went <span class="italic text-green">wrong.</span>
+    </h1>
+    <p style="color:var(--muted-fg);font-size:1rem;line-height:1.8;margin-bottom:2.5rem;">
+      We encountered an unexpected error on our end. Our team has been notified. Please try again in a moment or reach out to us directly.
+    </p>
+    <div style="display:flex;justify-content:center;gap:1rem;flex-wrap:wrap;">
+      <a href="{{ url_for('home') }}" class="btn btn-green">Back to Home</a>
+      <a href="{{ url_for('contact') }}" class="btn btn-navy">Contact Us</a>
+    </div>
+  </div>
+</section>
+{% endblock %}

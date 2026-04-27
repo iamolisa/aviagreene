@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{% block title %}AviaGreene Solutions — Excellence in Motion. Trust in Every Flight.{% endblock %}</title>
+  <meta name="description" content="{% block meta_description %}AviaGreene Solutions Ltd. — Nigeria's trusted aviation operations partner. Ground handling, fuel, overflight permits, flight dispatch, catering, HOTAC, ground transport and pilgrimage flights.{% endblock %}" />
+  <meta name="keywords" content="{% block meta_keywords %}aviation Nigeria, ground handling Lagos, overflight permits Africa, flight dispatch Nigeria, aviation fuel Nigeria, charter flights Nigeria, AviaGreene{% endblock %}" />
+  <meta name="author" content="AviaGreene Solutions Ltd." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://www.aviagreene.com{% block canonical_path %}{% endblock %}" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="{% block og_type %}website{% endblock %}" />
+  <meta property="og:site_name" content="AviaGreene Solutions Ltd." />
+  <meta property="og:title" content="{% block og_title %}AviaGreene Solutions — Excellence in Motion. Trust in Every Flight.{% endblock %}" />
+  <meta property="og:description" content="{% block og_description %}Nigeria's trusted aviation operations partner delivering ground handling, permits, fuel, dispatch and pilgrimage flight logistics worldwide.{% endblock %}" />
+  <meta property="og:url" content="https://www.aviagreene.com{% block og_url %}{% endblock %}" />
+  <meta property="og:image" content="{% block og_image %}https://www.aviagreene.com/static/images/logo.png{% endblock %}" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="{% block twitter_title %}AviaGreene Solutions — Excellence in Motion. Trust in Every Flight.{% endblock %}" />
+  <meta name="twitter:description" content="{% block twitter_description %}Nigeria's trusted aviation operations partner — ground handling, permits, fuel, dispatch and more.{% endblock %}" />
+  <meta name="twitter:image" content="{% block twitter_image %}https://www.aviagreene.com/static/images/logo.png{% endblock %}" />
+
+
+  <!-- Schema.org Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "LocalBusiness",
+        "@id": "https://www.aviagreene.com/#business",
+        "name": "AviaGreene Solutions Ltd.",
+        "alternateName": "AviaGreene",
+        "description": "Nigeria's trusted aviation operations partner delivering ground handling, overflight permits, global fuel, flight dispatch, catering, HOTAC, ground transportation and pilgrimage flight logistics worldwide.",
+        "url": "https://www.aviagreene.com",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://www.aviagreene.com/static/images/logo.png"
+        },
+        "image": "https://www.aviagreene.com/static/images/logo.png",
+        "telephone": "+2349077584674",
+        "email": "ops@aviagreene.com",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "2nd floor, EAN Jetcenter, Murtala Muhammed International Airport",
+          "addressLocality": "Lagos",
+          "addressCountry": "NG"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": "6.5774",
+          "longitude": "3.3212"
+        },
+        "openingHoursSpecification": {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
+          "opens": "00:00",
+          "closes": "23:59"
+        },
+        "sameAs": [],
+        "areaServed": {
+          "@type": "Place",
+          "name": "Africa, Europe, Middle East, Americas, Asia"
+        },
+        "hasOfferCatalog": {
+          "@type": "OfferCatalog",
+          "name": "Aviation Services",
+          "itemListElement": [
+            {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Ground Handling Setup & Supervision", "url": "https://www.aviagreene.com/services/ground-handling"}},
+            {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Global Fuel Setup", "url": "https://www.aviagreene.com/services/global-fuel"}},
+            {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Overflight & Landing Permits", "url": "https://www.aviagreene.com/services/overflight-permits"}},
+            {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Flight Dispatch Services", "url": "https://www.aviagreene.com/services/flight-dispatch"}},
+            {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Catering Coordination", "url": "https://www.aviagreene.com/services/catering"}},
+            {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Hotel & Accommodation (HOTAC)", "url": "https://www.aviagreene.com/services/hotac"}},
+            {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Ground Transportation", "url": "https://www.aviagreene.com/services/ground-transportation"}},
+            {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Christian Pilgrimage Flights & Logistics", "url": "https://www.aviagreene.com/services/pilgrimage"}}
+          ]
+        }
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://www.aviagreene.com/#website",
+        "url": "https://www.aviagreene.com",
+        "name": "AviaGreene Solutions Ltd.",
+        "publisher": {"@id": "https://www.aviagreene.com/#business"}
+      }
+    ]
+  }
+  </script>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+</head>
+<body class="{% block body_class %}{% endblock %}">
+
+<!-- HEADER -->
+<header class="site-header {% block header_class %}solid{% endblock %}" id="site-header">
+  <div class="container header-inner">
+    <!-- Logo -->
+    <a href="{{ url_for('home') }}" aria-label="AviaGreene home" class="logo {% block logo_class %}{% endblock %}">
+      <img src="/static/images/logo.png" alt="AviaGreene Solutions" style="height:40px;width:auto;object-fit:contain;" />
+    </a>
+
+    <!-- Desktop nav -->
+    <nav class="site-nav">
+      <a href="{{ url_for('home') }}">Home</a>
+      <a href="{{ url_for('services') }}">Services</a>
+      <a href="{{ url_for('about') }}">About</a>
+      <a href="{{ url_for('global_reach') }}">Global Reach</a>
+      <a href="{{ url_for('blog') }}">Blog</a>
+      <a href="{{ url_for('faq') }}">FAQ</a>
+      <a href="{{ url_for('contact') }}">Contact</a>
+    </nav>
+
+    <a href="{{ url_for('contact') }}" class="btn btn-green btn-sm header-btn">
+      Request a Quote
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
+    </a>
+
+    <!-- Mobile toggle -->
+    <button class="menu-toggle" aria-label="Menu" aria-expanded="false">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+  </div>
+</header>
+
+<!-- MOBILE MENU -->
+<nav class="mobile-menu" id="mobile-menu">
+  <a href="{{ url_for('home') }}">Home</a>
+  <a href="{{ url_for('services') }}">Services</a>
+  <a href="{{ url_for('about') }}">About</a>
+  <a href="{{ url_for('global_reach') }}">Global Reach</a>
+  <a href="{{ url_for('blog') }}">Blog</a>
+  <a href="{{ url_for('faq') }}">FAQ</a>
+  <a href="{{ url_for('contact') }}">Contact</a>
+  <a href="{{ url_for('contact') }}" class="btn btn-green" style="margin-top:0.5rem;">Request a Quote</a>
+</nav>
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <div class="container" style="padding-top:1rem;">
+      {% for category, message in messages %}
+        <div class="flash flash-{{ category }}">{{ message }}</div>
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endwith %}
+
+<!-- MAIN CONTENT -->
+<main>
+  {% block content %}{% endblock %}
+</main>
+
+<!-- FOOTER -->
+{% block footer %}
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-main">
+      <div class="footer-brand">
+        <a href="{{ url_for('home') }}" class="logo logo-light">
+          <img src="/static/images/logo.png" alt="AviaGreene Solutions" style="height:40px;width:auto;object-fit:contain;" />
+        </a>
+        <p>AviaGreene Solutions Ltd. — a trusted aviation operations partner delivering charter, ground handling, fuel and flight support across Nigeria and the world.</p>
+        <div class="footer-contact">
+          <div class="footer-contact-row">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+            <span>Lagos, Nigeria</span>
+          </div>
+          <div class="footer-contact-row">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.1 13.22a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3 2.5h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 10.1a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            <a href="tel:+2349077584674">+234 (0) 907 758 4674</a>
+          </div>
+           <div class="footer-contact-row">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.1 13.22a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3 2.5h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 10.1a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            <a href="tel:+2348186096650">+234 (0) 818 609 6650</a>
+          </div>
+          <div class="footer-contact-row">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+            <a href="mailto:ops@aviagreene.com">ops@aviagreene.com</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <div class="footer-col-title">Services</div>
+        <ul>
+          <li><a href="{{ url_for('service_detail', slug='ground-handling') }}">Ground Handling</a></li>
+          <li><a href="{{ url_for('service_detail', slug='global-fuel') }}">Global Fuel Setup</a></li>
+          <li><a href="{{ url_for('service_detail', slug='overflight-permits') }}">Overflight & Permits</a></li>
+          <li><a href="{{ url_for('service_detail', slug='flight-dispatch') }}">Flight Dispatch</a></li>
+          <li><a href="{{ url_for('service_detail', slug='catering') }}">Catering Coordination</a></li>
+          <li><a href="{{ url_for('service_detail', slug='hotac') }}">Hotel & HOTAC</a></li>
+          <li><a href="{{ url_for('service_detail', slug='ground-transportation') }}">Ground Transportation</a></li>
+          <li><a href="{{ url_for('service_detail', slug='pilgrimage') }}">Pilgrimage Flights</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <div class="footer-col-title">Company</div>
+        <ul>
+          <li><a href="{{ url_for('about') }}">About</a></li>
+          <li><a href="{{ url_for('global_reach') }}">Global Reach</a></li>
+          <li><a href="{{ url_for('blog') }}">Blog & Insights</a></li>
+          <li><a href="{{ url_for('testimonials') }}">Testimonials</a></li>
+          <li><a href="{{ url_for('faq') }}">FAQ</a></li>
+          <li><a href="{{ url_for('contact') }}">Contact</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <div class="footer-col-title">Standards</div>
+        <ul>
+          <li>NCAA Compliant</li>
+          <li>IATA Aligned</li>
+          <li>ICAO Standards</li>
+          <li>24/7 Operations</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="container" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.5rem;">
+      <span>&copy; {{ now.year if now else '2026' }} AviaGreene Solutions Ltd. All rights reserved. <a href="{{ url_for('privacy') }}" style="color:rgba(255,255,255,0.4);font-size:0.8rem;margin-left:0.75rem;">Privacy Policy</a></span>
+      <span style="text-transform:uppercase;letter-spacing:0.2em;"> Created by &copy;SHAKAARAAH COMMUNICATIONS</span>
+    </div>
+  </div>
+</footer>
+{% endblock %}
+
+
+<!-- Cookie / Privacy Notice -->
+<div id="cookie-banner" style="
+  position:fixed;bottom:0;left:0;right:0;z-index:9998;
+  background:var(--navy);
+  border-top:1px solid rgba(255,255,255,0.08);
+  padding:1rem 2rem;
+  display:flex;align-items:center;justify-content:space-between;
+  gap:1.5rem;flex-wrap:wrap;
+  transform:translateY(100%);
+  transition:transform 0.4s cubic-bezier(0.4,0,0.2,1);
+">
+  <p style="margin:0;font-size:0.82rem;color:rgba(255,255,255,0.65);line-height:1.6;max-width:680px;">
+    We use cookies to improve your experience on our site and to analyse traffic. By continuing to use AviaGreene Solutions, you agree to our use of cookies.
+    <a href="{{ url_for('privacy') }}" style="color:var(--green);text-decoration:underline;margin-left:0.25rem;">Privacy Policy</a>
+  </p>
+  <div style="display:flex;gap:0.75rem;flex-shrink:0;">
+    <button onclick="acceptCookies()" class="btn btn-green btn-sm" style="white-space:nowrap;">Accept</button>
+    <button onclick="dismissCookies()" style="background:transparent;border:1px solid rgba(255,255,255,0.2);color:rgba(255,255,255,0.5);font-size:0.78rem;padding:0.45rem 1rem;cursor:pointer;font-family:inherit;">Decline</button>
+  </div>
+</div>
+
+<script>
+  (function() {
+    if (!localStorage.getItem('cookie_consent')) {
+      setTimeout(function() {
+        var banner = document.getElementById('cookie-banner');
+        if (banner) banner.style.transform = 'translateY(0)';
+      }, 1200);
+    }
+  })();
+  function acceptCookies() {
+    localStorage.setItem('cookie_consent', 'accepted');
+    hideCookieBanner();
+  }
+  function dismissCookies() {
+    localStorage.setItem('cookie_consent', 'declined');
+    hideCookieBanner();
+  }
+  function hideCookieBanner() {
+    var banner = document.getElementById('cookie-banner');
+    if (banner) banner.style.transform = 'translateY(100%)';
+  }
+</script>
+
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+
+<!-- WhatsApp Float Button -->
+<a href="https://wa.me/2349077584674?text=Hello%20AviaGreene%2C%20I%20would%20like%20to%20enquire%20about%20your%20aviation%20services."
+   target="_blank" aria-label="Chat on WhatsApp"
+   style="position:fixed;bottom:28px;right:28px;z-index:9999;width:56px;height:56px;border-radius:50%;background:#25d366;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(0,0,0,0.25);transition:transform 0.2s,box-shadow 0.2s;text-decoration:none;"
+   onmouseover="this.style.transform='scale(1.1)';this.style.boxShadow='0 6px 24px rgba(0,0,0,0.35)';"
+   onmouseout="this.style.transform='scale(1)';this.style.boxShadow='0 4px 16px rgba(0,0,0,0.25)';">
+  <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="#ffffff">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+    <path d="M11.99 2C6.477 2 2 6.484 2 12.017c0 1.99.583 3.849 1.565 5.423L2 22l4.644-1.541A9.97 9.97 0 0 0 11.99 22C17.523 22 22 17.516 22 11.983 22 6.477 17.523 2 11.99 2zm0 18c-1.68 0-3.26-.473-4.613-1.294l-.33-.197-3.42 1.134 1.146-3.35-.215-.345A8.007 8.007 0 0 1 3.99 12.017C3.99 7.58 7.563 4 11.99 4c4.418 0 7.99 3.58 7.99 7.983C19.98 16.423 16.408 20 11.99 20z"/>
+  </svg>
+</a>
+
+</body>
+</html>

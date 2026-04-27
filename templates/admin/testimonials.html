@@ -1,0 +1,105 @@
+{% extends "admin/base.html" %}
+{% block title %}Testimonials — AviaGreene Admin{% endblock %}
+
+{% block content %}
+<div class="admin-header">
+  <h1>Testimonials</h1>
+  <p style="color:var(--muted-fg);margin-top:0.25rem;font-size:0.9rem;">Review, approve or delete client testimonials before they appear on the site.</p>
+</div>
+
+<!-- PENDING -->
+<div style="margin-bottom:2.5rem;">
+  <h2 style="font-size:1.0625rem;color:var(--navy);margin-bottom:1rem;display:flex;align-items:center;gap:0.75rem;">
+    Awaiting Approval
+    {% if pending %}
+    <span style="background:hsl(38,75%,55%);color:#fff;font-size:0.65rem;font-weight:700;padding:2px 8px;border-radius:20px;">{{ pending|length }}</span>
+    {% endif %}
+  </h2>
+
+  {% if pending %}
+  <div style="display:flex;flex-direction:column;gap:1px;background:var(--border);">
+    {% for t in pending %}
+    <div style="background:var(--card);padding:1.5rem;display:grid;grid-template-columns:1fr auto;gap:1.5rem;align-items:start;">
+      <div>
+        <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:0.75rem;">
+          <div style="width:36px;height:36px;border-radius:50%;background:hsl(38,55%,55%);display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:700;color:#fff;flex-shrink:0;">{{ t.initials }}</div>
+          <div>
+            <div style="font-weight:600;font-size:0.9rem;color:var(--navy);">{{ t.name }}</div>
+            {% if t.title %}<div style="font-size:0.78rem;color:var(--muted-fg);">{{ t.title }}</div>{% endif %}
+          </div>
+          <span style="font-size:0.7rem;color:var(--muted-fg);margin-left:auto;">{{ t.created_at.strftime('%d %b %Y') }}</span>
+        </div>
+        <p style="font-size:0.9rem;color:var(--fg);line-height:1.8;margin:0;font-style:italic;">"{{ t.body }}"</p>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:0.5rem;min-width:100px;">
+        <form method="POST" action="{{ url_for('admin_testimonial_approve', t_id=t.id) }}">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+          <button type="submit" class="btn btn-green btn-sm" style="width:100%;justify-content:center;">
+            ✓ Approve
+          </button>
+        </form>
+        <form method="POST" action="{{ url_for('admin_testimonial_delete', t_id=t.id) }}" onsubmit="return confirm('Delete this testimonial permanently?');">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+          <button type="submit" class="btn btn-sm" style="width:100%;justify-content:center;background:hsl(0,60%,93%);color:hsl(0,60%,40%);border:none;cursor:pointer;">
+            ✕ Delete
+          </button>
+        </form>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  {% else %}
+  <div style="background:var(--card);border:1px solid var(--border);padding:2rem;text-align:center;color:var(--muted-fg);font-size:0.875rem;">
+    No testimonials awaiting approval.
+  </div>
+  {% endif %}
+</div>
+
+<!-- APPROVED -->
+<div>
+  <h2 style="font-size:1.0625rem;color:var(--navy);margin-bottom:1rem;display:flex;align-items:center;gap:0.75rem;">
+    Approved & Live
+    {% if approved %}
+    <span style="background:var(--green);color:#fff;font-size:0.65rem;font-weight:700;padding:2px 8px;border-radius:20px;">{{ approved|length }}</span>
+    {% endif %}
+  </h2>
+
+  {% if approved %}
+  <div style="display:flex;flex-direction:column;gap:1px;background:var(--border);">
+    {% for t in approved %}
+    <div style="background:var(--card);padding:1.5rem;display:grid;grid-template-columns:1fr auto;gap:1.5rem;align-items:start;">
+      <div>
+        <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:0.75rem;">
+          <div style="width:36px;height:36px;border-radius:50%;background:var(--green);display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:700;color:#fff;flex-shrink:0;">{{ t.initials }}</div>
+          <div>
+            <div style="font-weight:600;font-size:0.9rem;color:var(--navy);">{{ t.name }}</div>
+            {% if t.title %}<div style="font-size:0.78rem;color:var(--muted-fg);">{{ t.title }}</div>{% endif %}
+          </div>
+          <span style="font-size:0.7rem;color:var(--muted-fg);margin-left:auto;">{{ t.created_at.strftime('%d %b %Y') }}</span>
+        </div>
+        <p style="font-size:0.9rem;color:var(--fg);line-height:1.8;margin:0;font-style:italic;">"{{ t.body }}"</p>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:0.5rem;min-width:100px;">
+        <form method="POST" action="{{ url_for('admin_testimonial_reject', t_id=t.id) }}">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+          <button type="submit" class="btn btn-sm btn-navy" style="width:100%;justify-content:center;">
+            Unapprove
+          </button>
+        </form>
+        <form method="POST" action="{{ url_for('admin_testimonial_delete', t_id=t.id) }}" onsubmit="return confirm('Delete this testimonial permanently?');">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+          <button type="submit" class="btn btn-sm" style="width:100%;justify-content:center;background:hsl(0,60%,93%);color:hsl(0,60%,40%);border:none;cursor:pointer;">
+            ✕ Delete
+          </button>
+        </form>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  {% else %}
+  <div style="background:var(--card);border:1px solid var(--border);padding:2rem;text-align:center;color:var(--muted-fg);font-size:0.875rem;">
+    No approved testimonials yet.
+  </div>
+  {% endif %}
+</div>
+{% endblock %}
