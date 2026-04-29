@@ -1,0 +1,513 @@
+/* ============================================================
+   AVIAGREENE — PREMIUM ANIMATIONS & INTERACTIONS
+   Deep Navy · Signature Green · Gold Accents
+   ============================================================ */
+
+/* ── 0. CSS custom properties for glow colours ── */
+:root {
+  --glow-green:  0 0 20px hsl(152 60% 32% / 0.35), 0 0 60px hsl(152 60% 32% / 0.15);
+  --glow-gold:   0 0 20px hsl(38 55% 55% / 0.4),   0 0 50px hsl(38 55% 55% / 0.15);
+  --glow-navy:   0 0 30px hsl(215 55% 14% / 0.5),  0 0 60px hsl(215 55% 14% / 0.2);
+  --lift-shadow: 0 20px 60px -12px hsl(215 55% 14% / 0.25), 0 8px 20px -8px hsl(152 60% 32% / 0.15);
+}
+
+/* ============================================================
+   1. SCROLL REVEAL ENTRANCES
+   ============================================================ */
+.fade-up, .fade-left, .fade-right, .fade-in-el, .fade-scale {
+  opacity: 0;
+  will-change: transform, opacity;
+  transition: opacity 0.75s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.fade-up    { transform: translateY(40px); }
+.fade-left  { transform: translateX(-40px); }
+.fade-right { transform: translateX(40px); }
+.fade-in-el { transform: translateY(16px); }
+.fade-scale { transform: scale(0.94) translateY(20px); }
+
+.fade-up.visible,
+.fade-left.visible,
+.fade-right.visible,
+.fade-in-el.visible,
+.fade-scale.visible {
+  opacity: 1;
+  transform: translate(0, 0) scale(1);
+}
+
+/* ── Stagger delays ── */
+.stagger-children > *:nth-child(1) { transition-delay: 0.05s; }
+.stagger-children > *:nth-child(2) { transition-delay: 0.15s; }
+.stagger-children > *:nth-child(3) { transition-delay: 0.25s; }
+.stagger-children > *:nth-child(4) { transition-delay: 0.35s; }
+.stagger-children > *:nth-child(5) { transition-delay: 0.45s; }
+.stagger-children > *:nth-child(6) { transition-delay: 0.55s; }
+.stagger-children > *:nth-child(7) { transition-delay: 0.65s; }
+.stagger-children > *:nth-child(8) { transition-delay: 0.75s; }
+
+/* Apply fade-up to stagger children automatically */
+.stagger-children > * {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.stagger-children.visible > * {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ============================================================
+   2. PAGE LOADER
+   ============================================================ */
+#page-loader {
+  position: fixed; inset: 0; z-index: 99999;
+  background: var(--navy);
+  display: flex; align-items: center; justify-content: center;
+  flex-direction: column; gap: 1.5rem;
+  transition: opacity 0.6s ease, visibility 0.6s ease;
+}
+#page-loader.done { opacity: 0; visibility: hidden; pointer-events: none; }
+
+.loader-ring {
+  width: 48px; height: 48px;
+  border: 2px solid hsl(152 60% 32% / 0.2);
+  border-top-color: var(--green);
+  border-radius: 50%;
+  animation: loaderSpin 0.9s linear infinite;
+}
+@keyframes loaderSpin { to { transform: rotate(360deg); } }
+
+.loader-text {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.65rem;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: hsl(40 30% 97% / 0.4);
+  animation: loaderPulse 1.8s ease-in-out infinite;
+}
+@keyframes loaderPulse { 0%,100% { opacity: 0.4; } 50% { opacity: 1; } }
+
+/* ============================================================
+   3. HERO ANIMATIONS
+   ============================================================ */
+.hero-eyebrow {
+  opacity: 0;
+  transform: translateX(-20px);
+  animation: heroEyebrow 0.8s cubic-bezier(0.22,1,0.36,1) 0.2s forwards;
+}
+@keyframes heroEyebrow { to { opacity: 1; transform: translateX(0); } }
+
+.animate-fade-in h1 {
+  opacity: 0;
+  transform: translateY(30px);
+  animation: heroH1 0.9s cubic-bezier(0.22,1,0.36,1) 0.4s forwards;
+}
+@keyframes heroH1 { to { opacity: 1; transform: translateY(0); } }
+
+.animate-fade-in .hero-sub {
+  opacity: 0;
+  animation: heroFade 0.8s ease 0.7s forwards;
+}
+.animate-fade-in .hero-actions {
+  opacity: 0;
+  transform: translateY(12px);
+  animation: heroAction 0.7s ease 0.9s forwards;
+}
+@keyframes heroFade  { to { opacity: 1; } }
+@keyframes heroAction { to { opacity: 1; transform: translateY(0); } }
+
+/* Floating glow orb behind hero text */
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 20%; left: 10%;
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, hsl(152 60% 32% / 0.08) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+  animation: orbFloat 8s ease-in-out infinite;
+}
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: 10%; right: 5%;
+  width: 300px; height: 300px;
+  background: radial-gradient(circle, hsl(38 55% 55% / 0.06) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+  animation: orbFloat 10s ease-in-out 2s infinite reverse;
+}
+@keyframes orbFloat {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50%       { transform: translateY(-24px) scale(1.05); }
+}
+
+/* ============================================================
+   4. STAT COUNTER
+   ============================================================ */
+.stat-item {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.stat-item.visible { opacity: 1; transform: translateY(0); }
+
+/* ============================================================
+   5. SERVICE CARDS — GLOW + LIFT ON HOVER
+   ============================================================ */
+
+/* Cards inside the services grid on homepage */
+.services-grid a,
+section a[href*="/services/"] {
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.35s cubic-bezier(0.22,1,0.36,1),
+              box-shadow 0.35s cubic-bezier(0.22,1,0.36,1),
+              background 0.25s ease !important;
+}
+.services-grid a:hover,
+section a[href*="/services/"]:hover {
+  transform: translateY(-6px) !important;
+  box-shadow: var(--lift-shadow);
+  background: var(--muted) !important;
+}
+
+/* Green left-border sweep on hover */
+.services-grid a::before,
+section a[href*="/services/"]::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 3px;
+  background: var(--green);
+  transform: scaleY(0);
+  transform-origin: bottom;
+  transition: transform 0.35s cubic-bezier(0.22,1,0.36,1);
+}
+.services-grid a:hover::before,
+section a[href*="/services/"]:hover::before { transform: scaleY(1); }
+
+/* Shimmer sweep */
+.services-grid a::after,
+section a[href*="/services/"]::after {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%;
+  width: 60%; height: 100%;
+  background: linear-gradient(105deg, transparent 40%, hsl(152 60% 32% / 0.05) 50%, transparent 60%);
+  transition: left 0.55s ease;
+  pointer-events: none;
+}
+.services-grid a:hover::after,
+section a[href*="/services/"]:hover::after { left: 150%; }
+
+/* Icon glow on hover */
+.services-grid a:hover div[style*="green-soft"],
+section a[href*="/services/"]:hover div[style*="green-soft"] {
+  box-shadow: 0 0 16px hsl(152 60% 32% / 0.4);
+  transition: box-shadow 0.3s ease;
+}
+
+/* ============================================================
+   6. TESTIMONIAL CARDS — GLOW + LIFT ON HOVER
+   ============================================================ */
+/* Target testimonial cards on homepage and testimonials page */
+section[style*="background:var(--navy)"] div[style*="hsl(215 50% 18%)"],
+section[style*="background:hsl(215"] div[style*="hsl(215 50% 18%)"] {
+  transition: transform 0.35s cubic-bezier(0.22,1,0.36,1),
+              box-shadow 0.35s cubic-bezier(0.22,1,0.36,1),
+              border-color 0.3s ease;
+  border: 1px solid transparent;
+  cursor: default;
+}
+section[style*="background:var(--navy)"] div[style*="hsl(215 50% 18%)"]:hover,
+section[style*="background:hsl(215"] div[style*="hsl(215 50% 18%)"]:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--glow-green);
+  border-color: hsl(152 60% 32% / 0.3);
+}
+
+/* Testimonials page cards */
+.testimonials-grid-item {
+  transition: transform 0.35s cubic-bezier(0.22,1,0.36,1),
+              box-shadow 0.35s cubic-bezier(0.22,1,0.36,1);
+  border: 1px solid var(--border);
+}
+.testimonials-grid-item:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 50px -12px hsl(215 55% 14% / 0.15), 0 0 0 1px hsl(152 60% 32% / 0.15);
+}
+
+/* ============================================================
+   7. VALUE CARDS (About page)
+   ============================================================ */
+.value-item {
+  transition: transform 0.3s cubic-bezier(0.22,1,0.36,1),
+              box-shadow 0.3s ease;
+  border: 1px solid transparent;
+}
+.value-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 16px 40px -12px hsl(215 55% 14% / 0.1);
+  border-color: hsl(152 60% 32% / 0.12);
+}
+.value-item:hover .value-icon {
+  animation: iconPop 0.35s cubic-bezier(0.22,1,0.36,1);
+}
+@keyframes iconPop {
+  0%   { transform: scale(1); }
+  50%  { transform: scale(1.18); }
+  100% { transform: scale(1); }
+}
+
+/* ============================================================
+   8. BUTTONS — LIFT + RIPPLE + GLOW
+   ============================================================ */
+.btn {
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.2s cubic-bezier(0.22,1,0.36,1),
+              box-shadow 0.2s ease,
+              background 0.2s ease,
+              color 0.2s ease,
+              border-color 0.2s ease !important;
+}
+.btn:hover  { transform: translateY(-2px); }
+.btn:active { transform: translateY(0); }
+
+.btn-green:hover { box-shadow: var(--glow-green); }
+.btn-navy:hover  { box-shadow: var(--glow-navy); }
+
+/* Ripple */
+.btn::after {
+  content: '';
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 0; height: 0;
+  background: rgba(255,255,255,0.15);
+  border-radius: 50%;
+  transform: translate(-50%,-50%);
+  transition: width 0.5s ease, height 0.5s ease, opacity 0.5s ease;
+  opacity: 0;
+  pointer-events: none;
+}
+.btn:active::after {
+  width: 280px; height: 280px;
+  opacity: 1;
+  transition: 0s;
+}
+
+/* ============================================================
+   9. NAV LINK ANIMATED UNDERLINE
+   ============================================================ */
+.site-nav a {
+  position: relative;
+  padding-bottom: 3px;
+}
+.site-nav a::after {
+  content: '';
+  position: absolute;
+  bottom: -2px; left: 0;
+  height: 1px; width: 0;
+  background: var(--green);
+  transition: width 0.3s cubic-bezier(0.22,1,0.36,1);
+}
+.site-nav a:hover::after,
+.site-nav a.active::after { width: 100%; }
+
+/* ============================================================
+   10. SCROLLED HEADER
+   ============================================================ */
+.site-header {
+  transition: background 0.4s ease, box-shadow 0.4s ease,
+              border-color 0.4s ease, height 0.35s ease !important;
+}
+
+/* ============================================================
+   11. LOGO HOVER
+   ============================================================ */
+.logo { transition: opacity 0.2s ease; }
+.logo:hover { opacity: 0.85; }
+.logo img { transition: transform 0.3s cubic-bezier(0.22,1,0.36,1); }
+.logo:hover img { transform: scale(1.04); }
+
+/* ============================================================
+   12. HERO IMAGE OVERLAY PULSE
+   ============================================================ */
+.hero-overlay {
+  animation: overlayPulse 8s ease-in-out infinite;
+}
+@keyframes overlayPulse {
+  0%,100% { opacity: 1; }
+  50%      { opacity: 0.92; }
+}
+
+/* ============================================================
+   13. ABOUT SECTION IMAGE HOVER
+   ============================================================ */
+div[style*="aspect-ratio"] {
+  overflow: hidden;
+}
+div[style*="aspect-ratio"] img {
+  transition: transform 0.7s cubic-bezier(0.22,1,0.36,1),
+              opacity 0.4s ease;
+}
+div[style*="aspect-ratio"]:hover img {
+  transform: scale(1.04);
+}
+
+/* ============================================================
+   14. EYEBROW LINE ANIMATION
+   ============================================================ */
+.eyebrow {
+  position: relative;
+}
+
+/* ============================================================
+   15. PAGE HERO IMAGE ZOOM ON LOAD
+   ============================================================ */
+.page-hero img {
+  animation: heroImgZoom 8s cubic-bezier(0.22,1,0.36,1) forwards;
+}
+@keyframes heroImgZoom {
+  from { transform: scale(1.06); }
+  to   { transform: scale(1); }
+}
+
+/* ============================================================
+   16. CERTIFICATION CARDS (About page)
+   ============================================================ */
+div[style*="cert-"] img,
+div[style*="cert"] {
+  transition: transform 0.3s cubic-bezier(0.22,1,0.36,1),
+              box-shadow 0.3s ease;
+}
+/* Cert card hover */
+section div[style*="padding:1.5rem"][style*="text-align:center"] {
+  transition: transform 0.3s cubic-bezier(0.22,1,0.36,1),
+              box-shadow 0.3s ease;
+}
+section div[style*="padding:1.5rem"][style*="text-align:center"]:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px -8px hsl(215 55% 14% / 0.12);
+}
+
+/* ============================================================
+   17. BLOG CARD HOVER
+   ============================================================ */
+.blog-card {
+  transition: transform 0.3s cubic-bezier(0.22,1,0.36,1),
+              box-shadow 0.3s ease;
+}
+.blog-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 16px 40px -12px hsl(215 55% 14% / 0.15);
+}
+
+/* ============================================================
+   18. FAQ ACCORDION HOVER
+   ============================================================ */
+.faq-question {
+  transition: color 0.2s ease, background 0.2s ease;
+}
+.faq-question:hover {
+  color: var(--green) !important;
+  background: hsl(152 60% 32% / 0.03);
+}
+.faq-icon {
+  transition: transform 0.3s cubic-bezier(0.22,1,0.36,1),
+              color 0.2s ease;
+}
+
+/* ============================================================
+   19. FOOTER LINKS
+   ============================================================ */
+.footer-col ul li a {
+  position: relative;
+  transition: color 0.2s ease, padding-left 0.2s ease;
+}
+.footer-col ul li a:hover {
+  color: var(--green) !important;
+  padding-left: 6px;
+}
+
+/* ============================================================
+   20. STAT ITEM GLOW ON HOVER (dark version)
+   ============================================================ */
+.stat-item.dark {
+  transition: transform 0.3s cubic-bezier(0.22,1,0.36,1),
+              box-shadow 0.3s ease;
+  cursor: default;
+}
+.stat-item.dark:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 32px hsl(152 60% 32% / 0.2);
+}
+.stat-item.dark:hover .stat-k {
+  color: hsl(152, 45%, 65%) !important;
+  transition: color 0.25s ease;
+}
+
+/* ============================================================
+   21. GLOBAL REACH REGION CARDS
+   ============================================================ */
+.region-card {
+  transition: transform 0.3s cubic-bezier(0.22,1,0.36,1),
+              background 0.3s ease,
+              border-color 0.3s ease;
+  border: 1px solid transparent;
+}
+.region-card:hover {
+  transform: translateY(-3px);
+  background: var(--navy-light) !important;
+  border-color: hsl(152 60% 32% / 0.25);
+}
+
+/* ============================================================
+   22. SCROLLBAR STYLING
+   ============================================================ */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: var(--navy); }
+::-webkit-scrollbar-thumb { background: var(--green); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: hsl(152,60%,42%); }
+
+/* ============================================================
+   23. TEXT SELECTION
+   ============================================================ */
+::selection {
+  background: hsl(152 60% 32% / 0.2);
+  color: var(--navy);
+}
+
+/* ============================================================
+   24. MOBILE MENU LINKS
+   ============================================================ */
+.mobile-menu a {
+  transition: color 0.2s ease, transform 0.2s ease;
+  display: block;
+}
+.mobile-menu a:hover {
+  color: var(--green) !important;
+  transform: translateX(4px);
+}
+
+/* ============================================================
+   25. PARALLAX IMAGE
+   ============================================================ */
+.parallax-img {
+  will-change: transform;
+  transition: transform 0.1s linear;
+}
+
+/* ============================================================
+   REDUCED MOTION
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .hero::before, .hero::after { display: none; }
+}

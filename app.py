@@ -22,8 +22,8 @@ app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(hours=2)
 app.config['SESSION_COOKIE_HTTPONLY'] = True
 app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
 app.config['SENDGRID_API_KEY'] = os.environ.get('SENDGRID_API_KEY', '')
-app.config['SENDGRID_FROM_EMAIL'] = os.environ.get('SENDGRID_FROM_EMAIL', 'aguakaolisa2004@gmail.com')
-app.config['ADMIN_EMAIL'] = os.environ.get('ADMIN_EMAIL', 'aguakaolisa2004@gmail.com')
+app.config['SENDGRID_FROM_EMAIL'] = os.environ.get('SENDGRID_FROM_EMAIL', 'ops@aviagreene.com')
+app.config['ADMIN_EMAIL'] = os.environ.get('ADMIN_EMAIL', 'ops@aviagreene.com')
 
 db = SQLAlchemy(app)
 csrf = CSRFProtect(app)
@@ -33,7 +33,7 @@ csrf = CSRFProtect(app)
 
 def send_email(to, subject, html_content):
     api_key = app.config.get('SENDGRID_API_KEY', '')
-    from_email = app.config.get('SENDGRID_FROM_EMAIL', 'aguakaolisa2004@gmail.com')
+    from_email = app.config.get('SENDGRID_FROM_EMAIL', 'ops@aviagreene.com')
     if not api_key:
         return
     try:

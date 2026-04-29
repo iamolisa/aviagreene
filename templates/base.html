@@ -92,8 +92,15 @@
   }
   </script>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/animations.css') }}" />
 </head>
 <body class="{% block body_class %}{% endblock %}">
+
+<!-- Page loader -->
+<div id="page-loader">
+  <div class="loader-ring"></div>
+  <div class="loader-text">AviaGreene</div>
+</div>
 
 <!-- HEADER -->
 <header class="site-header {% block header_class %}solid{% endblock %}" id="site-header">
@@ -275,6 +282,7 @@
 </script>
 
 <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+<script src="{{ url_for('static', filename='js/animations.js') }}"></script>
 
 <!-- WhatsApp Float Button -->
 <a href="https://wa.me/2349077584674?text=Hello%20AviaGreene%2C%20I%20would%20like%20to%20enquire%20about%20your%20aviation%20services."
