@@ -143,9 +143,26 @@
     var menu   = document.getElementById('mobile-menu');
     if (!toggle || !menu) return;
     toggle.addEventListener('click', function () {
-      var open = menu.style.display === 'flex';
-      menu.style.display = open ? 'none' : 'flex';
-      toggle.setAttribute('aria-expanded', String(!open));
+      var isOpen = menu.classList.contains('open');
+      menu.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', String(!isOpen));
+      document.body.style.overflow = isOpen ? '' : 'hidden';
+    });
+    // Close on outside click
+    menu.addEventListener('click', function (e) {
+      if (e.target === menu) {
+        menu.classList.remove('open');
+        toggle.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
+      }
+    });
+    // Close on nav link click
+    menu.querySelectorAll('a').forEach(function (a) {
+      a.addEventListener('click', function () {
+        menu.classList.remove('open');
+        toggle.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
+      });
     });
   }
 
