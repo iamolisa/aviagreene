@@ -16,8 +16,20 @@
 
 <!-- HERO -->
 <section class="hero">
-  <!-- fallback image if no video -->
-  <img class="hero-img" src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=1920&q=80" alt="Aviation" />
+  <!-- Background videos — muted + autoplay + playsinline required for all browsers/iOS -->
+  <video
+    class="hero-video"
+    autoplay
+    muted
+    loop
+    playsinline
+    preload="auto"
+    poster="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=1920&q=80"
+    aria-hidden="true">
+    <source src="{{ url_for('static', filename='videos/aviagreene_background_video.mp4') }}" type="video/mp4" />
+    <!-- Fallback image for browsers that block autoplay entirely -->
+    <img class="hero-img" src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=1920&q=80" alt="Aviation background" />
+  </video>
   <div class="hero-overlay"></div>
   <div class="container hero-content">
     <div style="max-width:48rem;" class="animate-fade-in">

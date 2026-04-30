@@ -171,3 +171,33 @@
   ].join('\n');
   document.head.appendChild(s);
 })();
+
+/* ── Hero background video — autoplay + reduced-motion handling ─────────── */
+(function () {
+  var video = document.querySelector('.hero-video');
+  if (!video) return;
+
+  // Respect prefers-reduced-motion: pause and show poster instead
+  var mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+  function handleMotion(e) {
+    if (e.matches) {
+      video.pause();
+      video.style.display = 'none'; // poster on <section> background shows through
+    } else {
+      video.style.display = '';
+      video.play().catch(function () {});
+    }
+  }
+  handleMotion(mq);
+  if (mq.addEventListener) { mq.addEventListener('change', handleMotion); }
+  else if (mq.addListener)  { mq.addListener(handleMotion); } // Safari < 14
+
+  // Autoplay may be blocked (e.g. low-power mode on iOS) — fail silently,
+  // poster image is always shown as the video element background
+  var playPromise = video.play();
+  if (playPromise !== undefined) {
+    playPromise.catch(function () {
+      // Autoplay blocked — poster is already visible, nothing to do
+    });
+  }
+})();
