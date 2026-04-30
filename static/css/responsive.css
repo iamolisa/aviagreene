@@ -304,19 +304,39 @@
   position: fixed;
   top: 0; left: 0; right: 0; bottom: 0;
   background: var(--navy);
-  z-index: 998;
-  padding: 5rem 2rem 2rem;
-  gap: 0.25rem;
+  z-index: 9990;
+  padding: 1.5rem 1.5rem 2rem;
+  gap: 0;
   overflow-y: auto;
+  transform: translateX(100%);
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
 }
-.mobile-menu.open { display: flex !important; }
+.mobile-menu.open {
+  display: flex;
+  transform: translateX(0);
+}
+.mobile-menu-close {
+  align-self: flex-end;
+  background: none;
+  border: none;
+  color: hsl(40 30% 97% / 0.7);
+  cursor: pointer;
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+}
+.mobile-menu-close:hover { color: var(--green); }
 .mobile-menu a {
   padding: 1rem 0;
-  font-size: 1.125rem;
+  font-size: 1.0625rem;
   font-weight: 500;
   color: hsl(40 30% 97% / 0.8);
   border-bottom: 1px solid hsl(40 30% 97% / 0.06);
   text-decoration: none;
+  transition: color 0.2s ease, padding-left 0.2s ease;
+}
+.mobile-menu a:hover {
+  color: var(--green);
+  padding-left: 6px;
 }
 
 /* ── Admin mobile hamburger ── */
@@ -348,4 +368,73 @@
 @media (max-width: 480px) {
   #client-type-btns { grid-template-columns: 1fr 1fr 1fr !important; gap: 0.4rem !important; }
   .type-btn svg { display: none; }
+}
+
+/* ── WhatsApp button — don't overlap stats ── */
+@media (max-width: 640px) {
+  a[href*="wa.me"] {
+    bottom: 16px !important;
+    right: 16px !important;
+    width: 48px !important;
+    height: 48px !important;
+  }
+  a[href*="wa.me"] svg {
+    width: 22px !important;
+    height: 22px !important;
+  }
+}
+
+/* ── Stats row — ensure text doesn't get cut ── */
+@media (max-width: 640px) {
+  .stats-row {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 1px !important;
+    background: hsl(40 30% 97% / 0.06) !important;
+  }
+  .stat-item.dark {
+    padding: 1.5rem 1rem !important;
+    text-align: center !important;
+  }
+  .stat-k { font-size: 2rem !important; }
+  .stat-v { font-size: 0.72rem !important; letter-spacing: 0.08em !important; }
+}
+
+/* ── Hero — ensure content doesn't overflow on small phones ── */
+@media (max-width: 400px) {
+  .hero-content { padding: 5rem 0 2rem !important; }
+  .hero-sub { font-size: 0.85rem !important; line-height: 1.65 !important; }
+  .hero-eyebrow { font-size: 0.65rem !important; letter-spacing: 0.15em !important; }
+}
+
+/* ── Cookie banner — full width on mobile ── */
+@media (max-width: 640px) {
+  #cookie-banner {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    padding: 1rem 1.25rem !important;
+    gap: 1rem !important;
+  }
+  #cookie-banner > div { width: 100%; }
+  #cookie-banner button { flex: 1; }
+}
+
+/* ── Page hero min-height on small screens ── */
+@media (max-width: 480px) {
+  .page-hero { min-height: 280px !important; }
+  .page-hero-content h1 { font-size: 1.6rem !important; }
+}
+
+/* ── Services grid on very small screens ── */
+@media (max-width: 400px) {
+  div[style*="grid-template-columns:repeat(3,1fr)"] {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* ── Testimonials section on mobile ── */
+@media (max-width: 640px) {
+  div[style*="grid-template-columns:repeat(3,1fr)"][style*="gap:1.5rem"] {
+    grid-template-columns: 1fr !important;
+  }
 }
