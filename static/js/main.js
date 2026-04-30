@@ -3,168 +3,171 @@
 (function () {
   'use strict';
 
-  // ─── Sticky header ──────────────────────────────────────────────────────
+  /* ── Icon helpers (declared FIRST so they're always available) ──────── */
+  function iconHamburger() {
+    return '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>';
+  }
+  function iconClose() {
+    return '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>';
+  }
+
+  /* ── Sticky / transparent header ───────────────────────────────────── */
   var header = document.querySelector('.site-header');
   if (header) {
     var isTransparent = header.classList.contains('header-transparent');
     function onScroll() {
-      if (isTransparent) {
-        if (window.scrollY > 24) {
-          header.classList.add('scrolled');
-          header.classList.remove('transparent');
-        } else {
-          header.classList.remove('scrolled');
-          header.classList.add('transparent');
-        }
+      if (!isTransparent) return;
+      if (window.scrollY > 24) {
+        header.classList.add('scrolled');
+        header.classList.remove('transparent');
+      } else {
+        header.classList.remove('scrolled');
+        header.classList.add('transparent');
       }
     }
     onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
   }
 
-  // ─── Mobile menu ────────────────────────────────────────────────────────
-  var menuToggle  = document.querySelector('.menu-toggle');
-  var mobileMenu  = document.getElementById('mobile-menu');
-  var closeBtn    = document.getElementById('mobile-menu-close');
-  var body        = document.body;
+  /* ── Mobile menu — 100% inline-style, zero CSS-class dependency ─────
+   *
+   *  How it works:
+   *  • applyMenuStyles() writes every visual property directly onto the
+   *    element's .style object, which has higher priority than any
+   *    stylesheet rule.  Nothing the CSS says can override it.
+   *  • The toggle button calls e.stopPropagation() so the document-level
+   *    "tap outside" listener never fires on the very same click that
+   *    opens the menu (which would immediately close it again).
+   *  • Clicks inside the menu panel are also stopped so they don't
+   *    bubble to the document and accidentally close it.
+   * ------------------------------------------------------------------ */
+  var menuToggle = document.querySelector('.menu-toggle');
+  var mobileMenu = document.getElementById('mobile-menu');
+  var closeBtn   = document.getElementById('mobile-menu-close');
+  var menuOpen   = false;
+
+  function applyMenuStyles(open) {
+    if (!mobileMenu) return;
+    mobileMenu.style.display       = 'flex';
+    mobileMenu.style.flexDirection = 'column';
+    mobileMenu.style.position      = 'fixed';
+    mobileMenu.style.top           = '0';
+    mobileMenu.style.left          = '0';
+    mobileMenu.style.right         = '0';
+    mobileMenu.style.bottom        = '0';
+    mobileMenu.style.width         = '100%';
+    mobileMenu.style.height        = '100%';
+    mobileMenu.style.background    = 'var(--navy, #0b1a2e)';
+    mobileMenu.style.zIndex        = '9990';
+    mobileMenu.style.padding       = '1.5rem 1.5rem 3rem';
+    mobileMenu.style.gap           = '0';
+    mobileMenu.style.overflowY     = 'auto';
+    mobileMenu.style.transition    = 'transform 0.35s cubic-bezier(0.22,1,0.36,1), visibility 0.35s';
+    // Only these two change between open and closed:
+    mobileMenu.style.transform     = open ? 'translateX(0)'  : 'translateX(100%)';
+    mobileMenu.style.visibility    = open ? 'visible'        : 'hidden';
+  }
+
+  // Initialise as CLOSED the moment the script runs
+  applyMenuStyles(false);
 
   function openMenu() {
-    if (!mobileMenu) return;
-    mobileMenu.classList.add('open');
-    body.style.overflow = 'hidden';          // prevent background scroll
-    if (menuToggle) menuToggle.setAttribute('aria-expanded', 'true');
-    if (menuToggle) menuToggle.innerHTML = svgX();
+    menuOpen = true;
+    applyMenuStyles(true);
+    document.body.style.overflow = 'hidden';
+    if (menuToggle) {
+      menuToggle.setAttribute('aria-expanded', 'true');
+      menuToggle.innerHTML = iconClose();
+    }
   }
 
   function closeMenu() {
-    if (!mobileMenu) return;
-    mobileMenu.classList.remove('open');
-    body.style.overflow = '';
-    if (menuToggle) menuToggle.setAttribute('aria-expanded', 'false');
-    if (menuToggle) menuToggle.innerHTML = svgMenu();
+    menuOpen = false;
+    applyMenuStyles(false);
+    document.body.style.overflow = '';
+    if (menuToggle) {
+      menuToggle.setAttribute('aria-expanded', 'false');
+      menuToggle.innerHTML = iconHamburger();
+    }
   }
 
-  if (menuToggle && mobileMenu) {
-    menuToggle.addEventListener('click', function () {
-      if (mobileMenu.classList.contains('open')) {
-        closeMenu();
-      } else {
-        openMenu();
-      }
+  // Hamburger button — stopPropagation prevents the document handler
+  // from seeing this same click and immediately closing the menu
+  if (menuToggle) {
+    menuToggle.addEventListener('click', function (e) {
+      e.stopPropagation();
+      if (menuOpen) { closeMenu(); } else { openMenu(); }
     });
   }
 
-  // Wire up close button inside mobile menu
+  // X button inside the menu
   if (closeBtn) {
-    closeBtn.addEventListener('click', closeMenu);
-  }
-
-  // Close when any link inside menu is clicked
-  if (mobileMenu) {
-    mobileMenu.querySelectorAll('a').forEach(function (a) {
-      a.addEventListener('click', closeMenu);
+    closeBtn.addEventListener('click', function (e) {
+      e.stopPropagation();
+      closeMenu();
     });
   }
 
-  // Close on backdrop click (clicking outside the nav)
+  // Clicks inside the panel stay inside — don't bubble to document
   if (mobileMenu) {
     mobileMenu.addEventListener('click', function (e) {
-      if (e.target === mobileMenu) closeMenu();
+      e.stopPropagation();
+    });
+    // Nav links still navigate (and close the menu first)
+    mobileMenu.querySelectorAll('a').forEach(function (a) {
+      a.addEventListener('click', function () { closeMenu(); });
     });
   }
 
-  // Close on Escape key
+  // Escape key
   document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape' && mobileMenu && mobileMenu.classList.contains('open')) {
-      closeMenu();
-    }
+    if (e.key === 'Escape' && menuOpen) closeMenu();
   });
 
-  // ─── Active nav link ────────────────────────────────────────────────────
-  var currentPath = window.location.pathname;
+  // Tap anywhere outside the open menu closes it
+  document.addEventListener('click', function () {
+    if (menuOpen) closeMenu();
+  });
+
+  /* ── Active nav link highlight ─────────────────────────────────────── */
+  var path = window.location.pathname;
   document.querySelectorAll('.site-nav a, .mobile-menu a').forEach(function (a) {
     var href = a.getAttribute('href');
-    if (href === currentPath || (href !== '/' && currentPath.startsWith(href))) {
+    if (href && (href === path || (href !== '/' && path.startsWith(href)))) {
       a.classList.add('active');
     }
   });
 
-  // ─── Scroll-triggered fade in ────────────────────────────────────────────
+  /* ── Scroll-triggered fade-in ──────────────────────────────────────── */
   if ('IntersectionObserver' in window) {
-    var observer = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          observer.unobserve(entry.target);
+    var fadeObs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          fadeObs.unobserve(e.target);
         }
       });
-    }, { threshold: 0.1 });   // slightly lower threshold for small screens
-
-    document.querySelectorAll('.fade-up').forEach(function (el) {
-      observer.observe(el);
+    }, { threshold: 0.08 });
+    document.querySelectorAll('.fade-up, .fade-right').forEach(function (el) {
+      fadeObs.observe(el);
     });
   } else {
-    document.querySelectorAll('.fade-up').forEach(function (el) {
+    document.querySelectorAll('.fade-up, .fade-right').forEach(function (el) {
       el.classList.add('visible');
     });
   }
 
-  // ─── SVG icons for menu toggle ──────────────────────────────────────────
-  function svgMenu() {
-    return '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>';
-  }
-
-  function svgX() {
-    return '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>';
-  }
-
-
 })();
 
-// Additional CSS for fade-up
+/* ── Animation classes injected at runtime ─────────────────────────────── */
 (function () {
-  var style = document.createElement('style');
-  style.textContent = [
-    '.fade-up {',
-    '  opacity: 0;',
-    '  transform: translateY(24px);',
-    '  transition: opacity 0.7s cubic-bezier(0.22,1,0.36,1), transform 0.7s cubic-bezier(0.22,1,0.36,1);',
-    '}',
-    '.fade-up.visible {',
-    '  opacity: 1;',
-    '  transform: translateY(0);',
-    '}',
-    '.fade-right {',
-    '  opacity: 0;',
-    '  transform: translateX(24px);',
-    '  transition: opacity 0.7s cubic-bezier(0.22,1,0.36,1), transform 0.7s cubic-bezier(0.22,1,0.36,1);',
-    '}',
-    '.fade-right.visible {',
-    '  opacity: 1;',
-    '  transform: translateX(0);',
-    '}',
-    /* On small screens, reduce motion for better performance */
-    '@media (prefers-reduced-motion: reduce) {',
-    '  .fade-up, .fade-right {',
-    '    transition: opacity 0.3s ease;',
-    '    transform: none;',
-    '  }',
-    '}'
+  var s = document.createElement('style');
+  s.textContent = [
+    '.fade-up{opacity:0;transform:translateY(24px);transition:opacity .7s cubic-bezier(.22,1,.36,1),transform .7s cubic-bezier(.22,1,.36,1)}',
+    '.fade-up.visible{opacity:1;transform:translateY(0)}',
+    '.fade-right{opacity:0;transform:translateX(24px);transition:opacity .7s cubic-bezier(.22,1,.36,1),transform .7s cubic-bezier(.22,1,.36,1)}',
+    '.fade-right.visible{opacity:1;transform:translateX(0)}',
+    '@media(prefers-reduced-motion:reduce){.fade-up,.fade-right{transition:opacity .3s ease;transform:none}}'
   ].join('\n');
-  document.head.appendChild(style);
-
-  // Also observe fade-right elements
-  if ('IntersectionObserver' in window) {
-    var obs = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          obs.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.1 });
-    document.querySelectorAll('.fade-right').forEach(function (el) { obs.observe(el); });
-  } else {
-    document.querySelectorAll('.fade-right').forEach(function (el) { el.classList.add('visible'); });
-  }
+  document.head.appendChild(s);
 })();

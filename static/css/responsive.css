@@ -319,61 +319,37 @@ img, video, iframe, svg { max-width: 100%; height: auto; }
   .container { max-width: 100%; }
 }
 
-/* --- 10. MOBILE MENU (full-screen slide-in) ------------------- */
-.mobile-menu {
-  display: flex;
-  flex-direction: column;
-  position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: var(--navy);
-  z-index: 9990;
-  padding: 1.5rem 1.5rem 2rem;
-  gap: 0;
-  overflow-y: auto;
-  transform: translateX(100%);
-  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
-  visibility: hidden;
-}
-.mobile-menu.open {
-  transform: translateX(0);
-  visibility: visible;
-}
+/* --- 10. MOBILE MENU — defined in style.css --- */
+/* --- MOBILE MENU CLOSE BUTTON + CTA BUTTON inside menu ----------- */
 .mobile-menu-close {
   align-self: flex-end;
   background: none;
-  border: none;
+  border: 1px solid hsl(40 30% 97% / 0.15);
   color: hsl(40 30% 97% / 0.7);
   cursor: pointer;
   padding: 0.5rem;
-  margin-bottom: 1rem;
+  margin-bottom: 1.25rem;
   min-width: 44px;
   min-height: 44px;
   display: flex;
   align-items: center;
   justify-content: center;
+  border-radius: 4px;
+  flex-shrink: 0;
 }
-.mobile-menu-close:hover { color: var(--green); }
-.mobile-menu a {
-  padding: 1rem 0;
-  font-size: 1.0625rem;
-  font-weight: 500;
-  color: hsl(40 30% 97% / 0.8);
-  border-bottom: 1px solid hsl(40 30% 97% / 0.06);
-  text-decoration: none;
-  transition: color 0.2s ease, padding-left 0.2s ease;
-  min-height: 48px;
-  display: flex;
-  align-items: center;
-}
-.mobile-menu a:hover, .mobile-menu a:active {
-  color: var(--green);
-  padding-left: 6px;
+.mobile-menu-close:hover, .mobile-menu-close:focus {
+  color: hsl(40 30% 97%);
+  border-color: hsl(40 30% 97% / 0.4);
+  outline: none;
 }
 .mobile-menu .btn {
-  margin-top: 1rem;
+  margin-top: 1.25rem;
   justify-content: center;
-  min-height: 48px;
+  min-height: 52px;
+  width: 100%;
+  text-align: center;
 }
+
 
 /* --- 11. MENU TOGGLE — 44px touch target --------------------- */
 .menu-toggle {
